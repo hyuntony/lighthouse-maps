@@ -6,6 +6,7 @@
  */
 
 const express = require('express');
+const { generateRandomString } = require('../helpers/helperfunc');
 const router  = express.Router();
 
 module.exports = (db) => {
@@ -13,7 +14,7 @@ module.exports = (db) => {
     db.query(`SELECT * FROM users;`)
       .then(data => {
         const users = data.rows;
-        console.log(users);
+        console.log(generateRandomString());
         res.render('urls_login');
       })
       .catch(err => {
