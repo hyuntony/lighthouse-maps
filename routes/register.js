@@ -13,7 +13,8 @@ module.exports = (db) => {
     db.query(`SELECT * FROM users;`)
       .then(data => {
         const users = data.rows;
-        res.json({ users });
+        console.log(users);
+        res.render('urls_register');
       })
       .catch(err => {
         res
@@ -21,8 +22,8 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-  router.get("/hello", (req, res) => {
-    res.json({hello: 'world'});
-  });
+  // router.post("/", (req, res) => {
+  //   db.query(``)
+  // })
   return router;
 };

@@ -13,16 +13,14 @@ module.exports = (db) => {
     db.query(`SELECT * FROM users;`)
       .then(data => {
         const users = data.rows;
-        res.json({ users });
+        console.log(users);
+        res.render('urls_login');
       })
       .catch(err => {
         res
           .status(500)
           .json({ error: err.message });
       });
-  });
-  router.get("/hello", (req, res) => {
-    res.json({hello: 'world'});
   });
   return router;
 };
