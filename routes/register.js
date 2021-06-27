@@ -9,10 +9,23 @@ const express = require('express');
 const { generateRandomString } = require('../helpers/helperfunc');
 const router  = express.Router();
 const bcrypt = require('bcrypt');
+const cookieSession = require('cookie-session');
+
+
+// cookie-session settings
+router.use(cookieSession({
+  name: 'session',
+  keys: [ 'key1', 'key2' ],
+  maxAge: 24 * 60 * 60 * 1000
+}));
+
+// Bcrypt variables
 const saltRounds = 10;
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
+    const userID = req.session.user_id;
+    console.log(userID);
     db.query(`SELECT * FROM users;`)
       .then(data => {
         const users = data.rows;
@@ -35,11 +48,14 @@ module.exports = (db) => {
       .then(data => {
         if (data.rows.length > 0) {
           return res.status(400).send("Registered user with that email address already exists");
-        } else {
-          db.query(`INSERT INTO users (id, name, email, password)
-                    VALUES ('${randomId}', $1, $2, $3)`, [newUser.name, newUser.email, bcrypt.hashSync(newUser.password, saltRounds)])
-            .then(res.render('index'));
         }
+        db.query(`INSERT INTO users (id, name, email, password)
+                  VALUES ('${randomId}', $1, $2, $3)`, [newUser.name, newUser.email, bcrypt.hashSync(newUser.password, saltRounds)])
+          .then(
+            req.session['user_id'] = randomId,
+            res.render('index')
+          );
+
       });
   });
   return router;
