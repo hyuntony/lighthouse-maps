@@ -9,12 +9,19 @@ const bodyParser = require("body-parser");
 const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
+const bcrypt     = require('bcrypt');
+
+// Bcrypt variables
+const saltRounds = 10;
 
 // PG database client/connection setup
 const { Pool } = require('pg');
 const dbParams = require('./lib/db.js');
 const db = new Pool(dbParams);
 db.connect();
+
+// helper functions
+const { generateRandomString } = require('./helpers/helperfunc');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.

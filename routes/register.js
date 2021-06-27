@@ -8,6 +8,8 @@
 const express = require('express');
 const { generateRandomString } = require('../helpers/helperfunc');
 const router  = express.Router();
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -35,8 +37,7 @@ module.exports = (db) => {
           return res.status(400).send("Registered user with that email address already exists");
         } else {
           db.query(`INSERT INTO users (id, name, email, password)
-                    VALUES ('${randomId}', $1, $2, $3)
-                    RETURNING *`, [newUser.name, newUser.email, newUser.password])
+                    VALUES ('${randomId}', $1, $2, $3)`, [newUser.name, newUser.email, bcrypt.hashSync(newUser.password, saltRounds)])
             .then(res.render('index'));
         }
       });
