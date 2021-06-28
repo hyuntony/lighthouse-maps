@@ -6,22 +6,39 @@
  */
 
 const express = require('express');
-const { generateRandomString } = require('../helpers/helperfunc');
 const router  = express.Router();
+const cookieSession = require('cookie-session');
+
+// cookie-session settings
+router.use(cookieSession({
+  name: 'session',
+  keys: [ 'key1', 'key2' ],
+  maxAge: 24 * 60 * 60 * 1000
+}));
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
+    // const userID = req.session.user_id;
+    // if (userID) {
+    //   return res.redirect('/');
+    // }
     db.query(`SELECT * FROM users;`)
-      .then(data => {
-        const users = data.rows;
-        console.log(generateRandomString());
-        res.render('urls_login');
-      })
+      .then(
+        res.render('urls_login')
+      )
       .catch(err => {
         res
           .status(500)
           .json({ error: err.message });
       });
+  });
+  router.post("/", (req, res) => {
+    const loginAttempt = req.body;
+    console.log(loginAttempt);
+  });
+  router.post("/logout", (req, res) => {
+    req.session['user_id'] = null;
+    return res.redirect('/');
   });
   return router;
 };

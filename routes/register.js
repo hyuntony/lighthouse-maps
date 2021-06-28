@@ -24,13 +24,14 @@ const saltRounds = 10;
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    const userID = req.session.user_id;
-    console.log(userID);
+    // const userID = req.session.user_id;
+    // if (userID) {
+    //   return res.redirect('/');
+    // }
     db.query(`SELECT * FROM users;`)
-      .then(data => {
-        const users = data.rows;
-        res.render('urls_register');
-      })
+      .then(
+        res.render('urls_register')
+      )
       .catch(err => {
         res
           .status(500)

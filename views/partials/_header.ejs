@@ -1,0 +1,21 @@
+<header>
+  <nav>
+    <div class="left-container">
+      <a class="navbar-brand" href="/">Lighthouse Maps</a>
+      <a class="navbar-profile" href="/profile">Profile</a>
+    </div>
+    <div class="right-container">
+      <% if (user) { %>
+        <label>-Logged In As: <%= user %>-</label>
+        <form method="POST" action="/login/logout">
+          <button type="submit">Logout</button>
+        </form>
+      <% } else { %>
+        <form method="GET" action="/login">
+          <button type="submit">Login</button>
+          </form>
+        <% } %>
+    </div>
+
+  </nav>
+</header>

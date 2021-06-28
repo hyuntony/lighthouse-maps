@@ -7,11 +7,6 @@ CREATE TABLE users (
   name VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
-<<<<<<< HEAD
-  profile_pic_url VARCHAR(255)
-);
-=======
   profile_picture_url VARCHAR(255)
 );
 
->>>>>>> master
