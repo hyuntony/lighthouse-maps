@@ -72,6 +72,7 @@ app.use('/map', mapRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
+  console.log(bcrypt.hashSync('123', saltRounds));
   const userID = req.session.user_id;
   if (userID) {
     db.query(`SELECT * FROM users
