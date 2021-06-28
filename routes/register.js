@@ -24,13 +24,15 @@ const saltRounds = 10;
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    // const userID = req.session.user_id;
-    // if (userID) {
-    //   return res.redirect('/');
-    // }
+    const userID = req.session.user_id;
+    if (userID) {
+      return res.redirect('/');
+    }
+    const user = userID;
+    const templateVars = { user };
     db.query(`SELECT * FROM users;`)
       .then(
-        res.render('urls_register')
+        res.render('urls_register', templateVars)
       )
       .catch(err => {
         res
@@ -54,7 +56,7 @@ module.exports = (db) => {
                   VALUES ('${randomId}', $1, $2, $3)`, [newUser.name, newUser.email, bcrypt.hashSync(newUser.password, saltRounds)])
           .then(
             req.session['user_id'] = randomId,
-            res.render('index')
+            res.redirect('/')
           );
 
       });

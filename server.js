@@ -10,6 +10,14 @@ const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
 const bcrypt     = require('bcrypt');
+const cookieSession = require('cookie-session');
+
+// cookie-session settings
+app.use(cookieSession({
+  name: 'session',
+  keys: [ 'key1', 'key2' ],
+  maxAge: 24 * 60 * 60 * 1000
+}));
 
 // Bcrypt variables
 const saltRounds = 10;
@@ -58,7 +66,20 @@ app.use("/register", registerRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
-  res.render("index");
+  const userID = req.session.user_id;
+  if (userID) {
+    db.query(`SELECT * FROM users
+    WHERE id = $1`, [userID])
+      .then(data => {
+        const user = data.rows[0].name;
+        const templateVars = { user };
+        return res.render("index", templateVars);
+      });
+  } else {
+    const user = "";
+    const templateVars = { user };
+    return res.render("index", templateVars);
+  }
 });
 
 app.listen(PORT, () => {

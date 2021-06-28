@@ -8,6 +8,7 @@
 const express = require('express');
 const router  = express.Router();
 const cookieSession = require('cookie-session');
+const bcrypt = require('bcrypt');
 
 // cookie-session settings
 router.use(cookieSession({
@@ -18,13 +19,16 @@ router.use(cookieSession({
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    // const userID = req.session.user_id;
-    // if (userID) {
-    //   return res.redirect('/');
-    // }
+    console.log('***')
+    const userID = req.session.user_id;
+    if (userID) {
+      return res.redirect('/');
+    }
+    const user = userID;
+    const templateVars = { user };
     db.query(`SELECT * FROM users;`)
       .then(
-        res.render('urls_login')
+        res.render('urls_login', templateVars)
       )
       .catch(err => {
         res
@@ -34,7 +38,19 @@ module.exports = (db) => {
   });
   router.post("/", (req, res) => {
     const loginAttempt = req.body;
-    console.log(loginAttempt);
+    db.query(`SELECT * FROM users
+              WHERE email = $1`, [loginAttempt.email])
+      .then(data => {
+        if (data.rows.length === 0) {
+          return res.status(400).send("There are no accounts with that email registered");
+        } else if (data.rows.length > 0) {
+          if (!bcrypt.compareSync(loginAttempt.password, data.rows[0].password)) {
+            return res.status(400).send("Incorrect password");
+          }
+          req.session['user_id'] = data.rows[0].id;
+          return res.redirect('/');
+        }
+      });
   });
   router.post("/logout", (req, res) => {
     req.session['user_id'] = null;
