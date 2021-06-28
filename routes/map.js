@@ -6,9 +6,6 @@ module.exports = (db) => {
                 const userID = req.session.user_id;
               if (userID) {
 
-
-
-
                 db.query(`SELECT * FROM users
                 WHERE id = $1`, [userID])
                   .then(data => {
