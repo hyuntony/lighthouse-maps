@@ -19,7 +19,7 @@ VALUES (
   'This is the best pub crawl the world has ever seen!',
   'Toronto',
   '/images/default_map.png',
-  '{"lat": "43", "lng": "79"}',
+  '{"lat": "43.65466545346492", "lng": "-79.38810835706505"}',
   4,
   NOW()
 ),
