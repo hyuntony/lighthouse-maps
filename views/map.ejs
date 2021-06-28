@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home Page</title>
+
+
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <!-- leaflet api -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+ integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+ crossorigin=""></script>
+
+  <style>#mapid { height: 180px; }</style>
+
+  </head>
+
+  <body>
+    <h1>Lighthouse Maps</h1>
+
+
+    <%=map.name%>
+
+
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+  </body>
+</html>
