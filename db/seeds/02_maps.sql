@@ -18,7 +18,7 @@ VALUES (
   'Pub Crawls',
   'This is the best pub crawl the world has ever seen!',
   'Toronto',
-  '../public/images/default_map.png',
+  '/images/default_map.png',
   '{"lat": "43", "lng": "79"}',
   4,
   NOW()
@@ -29,7 +29,7 @@ VALUES (
   'Scenic walk',
   'A nice quiet walk through high park',
   'Toronto',
-  '../public/images/default_map.png',
+  '/images/default_map.png',
   '{"lat": "43.64913395525846", "lng": "-79.4679562680143"}',
   7,
   NOW()
@@ -40,7 +40,7 @@ VALUES (
   'Scenes from Scott Pilgrim',
   'Best scenes from the best movie!',
   'Toronto',
-  '../public/images/default_map.png',
+  '/images/default_map.png',
   '{"lat": "43.66508594101991", "lng": "-79.4115507922296"}',
   4,
   NOW()
