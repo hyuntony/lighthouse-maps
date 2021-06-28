@@ -72,21 +72,17 @@ app.use('/map', mapRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
-
   const userID = req.session.user_id;
-  if (userID) {
-    db.query(`SELECT * FROM users
-    WHERE id = $1`, [userID])
-      .then(data => {
-        const user = data.rows[0].name;
-        const templateVars = { user };
-        return res.render("index", templateVars);
-      });
-  } else {
-    const user = "";
-    const templateVars = { user };
-    return res.render("index", templateVars);
-  }
+  db.query(`SELECT * FROM users
+            WHERE id = $1`, [userID])
+    .then(data => {
+      let user = '';
+      if (data.rows.length > 0) {
+        user = data.rows[0].name;
+      }
+      const templateVars = { user };
+      return res.render("index", templateVars);
+    });
 });
 
 app.listen(PORT, () => {
