@@ -17,9 +17,29 @@ module.exports = (db) => {
   });
 
   router.post("/new", (req, res) => {
-    console.log(req.body);
-    res.status(200).send(`ok`);
+    const userID = req.session.user_id;
+    const { title, description, city } = req.body;
+    let lat,lng;
+    if (city === 'Toronto') {
+      lat = 43.66711105167949;
+      lng = -79.38703536987305;
+    }
+    if (city === 'Vancouver') {
+      lat = 49.2066341452146;
+      lng = -123.1024993211031;
+    }
+    db.query(`INSERT INTO maps (users_id, name, description, city, thumbnail_url, center_coords, zoom, date_created)
+              VALUES ($1, $2, $3, $4, '/images/default_map.png', '{"lat": "${lat}", "lng": "${lng}"}', 13, NOW())`, [userID, title, description, city])
+      .then(data => {
+        console.log('*****', data);
+        res.send('okay');
+        res.redirect(`/new/${id}`);
+      });
   });
+
+  router.get("/new/:id", (req, res) => {
+
+  })
 
   router.get("/:map", (req, res) => {
     const userID = req.session.user_id;

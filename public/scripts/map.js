@@ -34,7 +34,7 @@ $(() => {
     })
 
   function onMapClick(e) {
-        const coords = e
+        console.log(e.latlng);
     }
 
     mymap.on('click', onMapClick);
