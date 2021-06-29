@@ -29,17 +29,33 @@ module.exports = (db) => {
       lng = -123.1024993211031;
     }
     db.query(`INSERT INTO maps (users_id, name, description, city, thumbnail_url, center_coords, zoom, date_created)
-              VALUES ($1, $2, $3, $4, '/images/default_map.png', '{"lat": "${lat}", "lng": "${lng}"}', 13, NOW())`, [userID, title, description, city])
+              VALUES ($1, $2, $3, $4, '/images/default_map.png', '{"lat": "${lat}", "lng": "${lng}"}', 13, NOW())
+              RETURNING id`, [userID, title, description, city])
       .then(data => {
-        console.log('*****', data);
-        res.send('okay');
-        res.redirect(`/new/${id}`);
+        return res.redirect(`/map/new/${data.rows[0].id}`);
       });
   });
 
-  router.get("/new/:id", (req, res) => {
+  router.get("/new/:map_id", (req, res) => {
+    const userID = req.session.user_id;
+    const mapID = req.params.map_id;
+    db.query(`SELECT * FROM users
+              WHERE id = $1`, [userID])
+      .then(data => {
+        let user = '';
+        if (data.rows.length > 0) {
+          user = data.rows[0].name;
+        }
+        db.query(`SELECT * FROM maps WHERE id = $1 `, [mapID])
+          .then((data => {
+            const map = data.rows[0];
+            const templateVars = { userID, user, map };
+            console.log(templateVars);
+            return res.render("new_map_points", templateVars);
+          }));
+      });
+  });
 
-  })
 
   router.get("/:map", (req, res) => {
     const userID = req.session.user_id;
@@ -65,8 +81,4 @@ module.exports = (db) => {
 
 
   return router;
-
 };
-
-
-
