@@ -19,20 +19,25 @@ $(() => {
     url: "/api/maps/1/points"
   }).done((points) => {
     console.log(points.maps[0].center_coords);
-    mymap.setView([Number(points.maps[0].center_coords.lat), Number(points.maps[0].center_coords.lng)], 10);
+    mymap.setView([Number(points.maps[0].center_coords.lat), Number(points.maps[0].center_coords.lng)], 13);
     // console.log(users);
     // const usersParse = JSON.parse(users);
     points.maps.forEach(elem => {
-      console.log(elem.coords);
+      console.log(`***********`,elem);
       const lat = Number(elem.coords.lat);
       const lng = Number(elem.coords.lng);
-      L.marker([lat, lng]).addTo(mymap);
+      const marker = L.marker([lat, lng]).addTo(mymap);
+      marker.bindPopup(`<b>${elem.name}</b><br>${elem.description}`);
+
 
 
     })
 
+  function onMapClick(e) {
+        const coords = e
+    }
 
-
+    mymap.on('click', onMapClick);
     console.log(`******`,points);
 
 
