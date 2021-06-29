@@ -16,6 +16,11 @@ module.exports = (db) => {
       });
   });
 
+  router.post("/new", (req, res) => {
+    console.log(req.body);
+    res.status(200).send(`ok`);
+  });
+
   router.get("/:map", (req, res) => {
 
     const mapID = req.params.map;
@@ -29,9 +34,6 @@ module.exports = (db) => {
   });
 
 
-  router.post("/new", (req, res) => {
-    res.status(200).send(`ok`);
-  });
   return router;
 
 };
