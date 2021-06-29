@@ -4,6 +4,7 @@
     <title>Home Page</title>
 
 
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
 
@@ -19,19 +20,36 @@
  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
  crossorigin=""></script>
+  <!---<script src="scripts/map.js"></script> --->
+  <style>#mymap { height: 550px; width: 550px }</style>
 
-  <style>#mapid { height: 180px; }</style>
+
+
+
+
+
+
+
 
   </head>
 
   <body>
+    <header>
+      <%- include('partials/_header') %>
+    </header>
     <h1>Lighthouse Maps</h1>
-
+    <div id="mymap"></div>
 
     <%=map.name%>
 
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+
+
+
+
+<script type="text/javascript" src="/scripts/map.js"></script>
+
   </body>
 </html>

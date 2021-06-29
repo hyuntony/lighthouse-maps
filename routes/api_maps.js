@@ -23,5 +23,21 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+  router.get("/:map_id/points", (req, res) => {
+    let query = `SELECT * FROM maps
+    JOIN map_points on map_points.maps_id = maps.id
+    WHERE maps.id = $1`;
+    console.log(query);
+    db.query(query,[req.params.map_id])
+      .then(data => {
+        const maps = data.rows;
+        res.json({ maps });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
   return router;
 };
