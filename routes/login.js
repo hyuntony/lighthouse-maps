@@ -19,7 +19,7 @@ router.use(cookieSession({
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    console.log('***')
+    console.log('***');
     const userID = req.session.user_id;
     if (userID) {
       return res.redirect('/');
@@ -36,6 +36,7 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
   router.post("/", (req, res) => {
     const loginAttempt = req.body;
     db.query(`SELECT * FROM users
@@ -52,6 +53,7 @@ module.exports = (db) => {
         }
       });
   });
+
   router.post("/logout", (req, res) => {
     req.session['user_id'] = null;
     return res.redirect('/');

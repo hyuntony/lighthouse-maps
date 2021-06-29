@@ -23,6 +23,17 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
+  router.get("/:map_id", (req, res) => {
+    const mapID = req.params.map_id;
+    db.query(`SELECT * FROM maps
+              WHERE id = ${mapID}`)
+      .then(data => {
+        const map = data.rows;
+        res.json({ map });
+      });
+  });
+
   router.get("/:map_id/points", (req, res) => {
     let query = `SELECT * FROM maps
     LEFT JOIN map_points on map_points.maps_id = maps.id
