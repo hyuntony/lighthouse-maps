@@ -55,6 +55,8 @@ const registerRoutes = require("./routes/register");
 const apiMapsRoutes = require("./routes/api_maps");
 const mapsRoutes = require("./routes/maps");
 const mapRoutes = require("./routes/map");
+const profileRoutes = require("./routes/profile");
+const apiFavorites = require("./routes/api_favorites");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -65,6 +67,8 @@ app.use("/register", registerRoutes(db));
 app.use("/api/maps", apiMapsRoutes(db));
 app.use("/maps", mapsRoutes(db));
 app.use('/map', mapRoutes(db));
+app.use("/profile", profileRoutes(db));
+app.use('/api/favorites', apiFavorites(db));
 // Note: mount other resources here, using the same pattern above
 
 
@@ -79,8 +83,10 @@ app.get("/", (req, res) => {
       let user = '';
       if (data.rows.length > 0) {
         user = data.rows[0].name;
+
       }
-      const templateVars = { user };
+      const templateVars = { user, userID };
+      console.log(`*******`, templateVars);
       return res.render("index", templateVars);
     });
 });

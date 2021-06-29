@@ -37,12 +37,25 @@
     <header>
       <%- include('partials/_header') %>
     </header>
-    <h1>Lighthouse Maps</h1>
-    <div id="mymap"></div>
 
-    <%=map.name%>
+   <h1> <%=map.name%> </h1>
 
 
+   <div id="favorite">
+    <input type="hidden" value="<%= mapID %>" id="sample" name="sample"/>
+    <a href=""></a>
+   <img src='/images/favorite_icon.png'alt="Favorite Map" width="20" height="20">
+  </div>
+
+
+      <div id="mymap"></div>
+
+
+
+
+
+
+      <script>const mapID = <%= map.id %></script>
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
 

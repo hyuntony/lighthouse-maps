@@ -16,7 +16,7 @@ module.exports = (db) => {
         .then((data => {
           const map = data.rows[0];
           console.log(map);
-          const templateVars = { user, map };
+          const templateVars = { user, map, userID, mapID };
           return res.render("map", templateVars);
 
         }))

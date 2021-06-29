@@ -1,8 +1,12 @@
 <header>
   <nav>
     <div class="left-container">
-      <a class="navbar-brand" href="/">Lighthouse Maps</a>
-      <a class="navbar-profile" href="/profile">Profile</a>
+      <a class="navbar-brand" href="/maps">Lighthouse Maps</a>
+      <% if (user) { %>
+      <a class="navbar-profile" href="/profile/<%= userID %>">Profile</a>
+      <% } else { %>
+        <div></div>
+        <% } %>
     </div>
     <div class="right-container">
       <% if (user) { %>
