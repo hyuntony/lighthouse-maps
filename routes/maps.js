@@ -11,7 +11,7 @@ const router  = express.Router();
 module.exports = (db) => {
   router.get("/", (req, res) => {
     const userID = req.session.user_id;
-    const mapID = req.params.map;
+    //const mapID = req.params.map;
     db.query(`SELECT * FROM users
               WHERE id = $1`, [userID])
       .then(data => {
@@ -20,19 +20,17 @@ module.exports = (db) => {
           user = data.rows[0].name;
         }
         let query = `SELECT * FROM maps`;
-    console.log(query);
-    db.query(query)
-      .then(data => {
-        const maps = data.rows;
-        const templateVars = {maps, user, userID};
-        console.log(templateVars);
-        res.render('maps', templateVars)
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+        db.query(query)
+          .then(data => {
+            const maps = data.rows;
+            const templateVars = {maps, user, userID};
+            res.render('maps', templateVars);
+          })
+          .catch(err => {
+            res
+              .status(500)
+              .json({ error: err.message });
+          });
       });
   });
   return router;

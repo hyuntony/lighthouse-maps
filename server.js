@@ -5,7 +5,6 @@ require('dotenv').config();
 const PORT       = process.env.PORT || 8080;
 const ENV        = process.env.ENV || "development";
 const express    = require("express");
-const bodyParser = require("body-parser");
 const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
@@ -37,7 +36,7 @@ const { generateRandomString } = require('./helpers/helperfunc');
 app.use(morgan('dev'));
 
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));  app.use(express.json());    // enable JSON
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -86,7 +85,6 @@ app.get("/", (req, res) => {
 
       }
       const templateVars = { user, userID };
-      console.log(`*******`, templateVars);
       return res.render("index", templateVars);
     });
 });

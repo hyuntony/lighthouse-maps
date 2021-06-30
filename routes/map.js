@@ -11,7 +11,7 @@ module.exports = (db) => {
         if (data.rows.length > 0) {
           user = data.rows[0].name;
         }
-        const templateVars = { user };
+        const templateVars = { user, userID };
         return res.render("new_map", templateVars);
       });
   });
@@ -50,7 +50,6 @@ module.exports = (db) => {
           .then((data => {
             const map = data.rows[0];
             const templateVars = { userID, user, map };
-            console.log(templateVars);
             return res.render("new_map_points", templateVars);
           }));
       });
@@ -80,7 +79,6 @@ module.exports = (db) => {
               SET center_coords = '{"lat": "${lat}", "lng": "${lng}"}', zoom = ${zoom}
               WHERE ID = ${map.mapID}`)
       .then(data => {
-        console.log("success");
         return res.send(`http://localhost:8080/map/${map.mapID}`);
       });
   });
@@ -97,15 +95,12 @@ module.exports = (db) => {
           user = data.rows[0].name;
         }
         db.query(`SELECT * FROM maps WHERE id = $1 `, [mapID])
-        .then((data => {
-          const map = data.rows[0];
-          console.log(map);
-          const templateVars = { user, map, userID, mapID };
-          return res.render("map", templateVars);
-
+          .then((data => {
+            const map = data.rows[0];
+            const templateVars = { user, map, userID, mapID };
+            return res.render("map", templateVars);
           }));
       });
-
   });
 
 
