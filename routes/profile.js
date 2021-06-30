@@ -31,7 +31,7 @@ module.exports = (db) => {
               const favorites = data.rows;
               templateVars =  {maps, user, userID, favorites }
               res.render('profile', templateVars);
-            })
+            });
 
           })
           .catch(err => {
