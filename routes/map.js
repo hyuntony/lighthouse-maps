@@ -56,6 +56,21 @@ module.exports = (db) => {
       });
   });
 
+  //INSERT new map points into map_points table
+  router.post("/new/:map_id/points", (req, res) => {
+    const mapID = req.params.map_id;
+    const point = req.body;
+    const lat = Number(point.lat);
+    const lng = Number(point.lng);
+
+    db.query(`INSERT INTO map_points (maps_id, name, description, coords)
+              VALUES ($1, $2, $3, '{"lat": "${lat}", "lng": "${lng}" }')
+              RETURNING id`, [mapID, point.name, point.description])
+      .then(
+        res.json({ sucess: true })
+      );
+  });
+
 
   router.get("/:map", (req, res) => {
     const userID = req.session.user_id;
