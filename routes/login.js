@@ -19,7 +19,6 @@ router.use(cookieSession({
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    console.log('***');
     const userID = req.session.user_id;
     if (userID) {
       return res.redirect('/');

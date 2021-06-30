@@ -18,7 +18,7 @@ $(() => {
     const dataObj = points.maps;
     const {lat, lng} = dataObj[0] ? dataObj[0].center_coords : {lat:0,lng:0};
     const zoom = dataObj[0].zoom;
-    const mymap = L.map('mymap').setView([lat, lng],zoom)
+    const mymap = L.map('mymap').setView([lat, lng],zoom);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -30,11 +30,9 @@ $(() => {
     }).addTo(mymap);
 
     mymap.setView([Number(points.maps[0].center_coords.lat), Number(points.maps[0].center_coords.lng)], 13);
-    // console.log(users);
     // const usersParse = JSON.parse(users);
     if (points.maps[0].coords) {
       points.maps.forEach(elem => {
-        console.log(`***********`,elem);
         const lat = Number(elem.coords.lat);
         const lng = Number(elem.coords.lng);
         const marker = L.marker([lat, lng]).addTo(mymap);
@@ -47,33 +45,31 @@ $(() => {
     $('#goldIcon').show();
     $('#blackIcon').hide();
     e.preventDefault();
-    const mapID = $( "#sample" ).val();
-      console.log(mapID);
-      $.ajax({
-        method: 'POST',
-        url: '/api/favorites',
-        data: { mapID }
-      }).done( data => {
-        console.log(data);
-      }
-    )
+    const mapID = $("#sample").val();
+    $.ajax({
+      method: 'POST',
+      url: '/api/favorites',
+      data: { mapID }
+    }).done(data => {
+      console.log(data);
+    }
+    );
 
-    });
+  });
 
-  $('#goldIcon').click(function (e) {
+  $('#goldIcon').click(function(e) {
     $('#blackIcon').show();
     $('#goldIcon').hide();
     e.preventDefault();
-    const mapID = $( "#sample" ).val();
-    console.log(mapID);
+    const mapID = $("#sample").val();
     $.ajax({
       method: 'POST',
       url: '/api/favorites/delete',
       data: { mapID }
-    }).done( data => {
+    }).done(data => {
       console.log(data);
     }
-  )
+    );
 
   });
-})
+});

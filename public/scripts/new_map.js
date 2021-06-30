@@ -24,7 +24,7 @@ $(() => {
     .then((data) => {
       const mapobj = data.map[0];
       const { lat, lng } = mapobj.center_coords;
-      const $pointForm = $('#point-form');
+      //const $pointForm = $('#point-form');
 
 
       const mymap = L.map('mymap').setView([lat, lng], mapobj.zoom);
@@ -54,30 +54,21 @@ $(() => {
               $('#add-button').hide(),
               marker.closePopup(),
               marker.unbindPopup(),
-
             );
         });
-
       };
-
       mymap.on('click', onMapClick);
-
       $('#finish-button').click((e) => {
         e.preventDefault();
         const centerCoords = mymap.getCenter();
         const zoom = mymap.getZoom();
         const { lat, lng } = centerCoords;
         const data = { mapID, lat, lng, zoom};
-        console.log(data);
         $.post(`/map/new/${mapID}/update`, data)
           .then(data => {
-            console.log(data);
-
             window.location.href = data;
-
           });
       });
-
     });
 });
 

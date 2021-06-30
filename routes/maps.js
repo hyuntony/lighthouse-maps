@@ -20,12 +20,10 @@ module.exports = (db) => {
           user = data.rows[0].name;
         }
         let query = `SELECT * FROM maps`;
-        console.log(query);
         db.query(query)
           .then(data => {
             const maps = data.rows;
             const templateVars = {maps, user, userID};
-            console.log(templateVars);
             res.render('maps', templateVars);
           })
           .catch(err => {

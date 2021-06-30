@@ -50,7 +50,6 @@ module.exports = (db) => {
           .then((data => {
             const map = data.rows[0];
             const templateVars = { userID, user, map };
-            console.log(templateVars);
             return res.render("new_map_points", templateVars);
           }));
       });
@@ -80,7 +79,6 @@ module.exports = (db) => {
               SET center_coords = '{"lat": "${lat}", "lng": "${lng}"}', zoom = ${zoom}
               WHERE ID = ${map.mapID}`)
       .then(data => {
-        console.log("success");
         return res.send(`http://localhost:8080/map/${map.mapID}`);
       });
   });
@@ -88,7 +86,6 @@ module.exports = (db) => {
 
   router.get("/:map", (req, res) => {
     const userID = req.session.user_id;
-    console.log(req.session);
     const mapID = req.params.map;
     db.query(`SELECT * FROM users
               WHERE id = $1`, [userID])
@@ -100,12 +97,10 @@ module.exports = (db) => {
         db.query(`SELECT * FROM maps WHERE id = $1 `, [mapID])
           .then((data => {
             const map = data.rows[0];
-            console.log(userID);
             const templateVars = { user, map, userID, mapID };
             return res.render("map", templateVars);
           }));
       });
-
   });
 
 
