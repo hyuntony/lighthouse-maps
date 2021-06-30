@@ -10,11 +10,7 @@ const router  = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    console.log(req.data,`!!!!!!!!!!`);
-    const $data = $req.data.serialize();
-    console.log($data,`!!!!!!!!!!!!!!`);
     let query = `SELECT * FROM favorites`;
-    console.log(query);
     db.query(query)
       .then(data => {
         const favorites = data.rows;
@@ -28,35 +24,32 @@ module.exports = (db) => {
   });
 
   router.get("/:userID/:mapID", (req,res)=> {
-    console.log(req.params);
     db.query(`SELECT * FROM favorites
               WHERE users_id = $1 AND maps_id = $2`,[req.params.userID,req.params.mapID])
       .then(data => {
-        console.log(data,`........`);
         res.json(data.rows);
-      })
+      });
 
-  })
+  });
 
   router.post("/delete", (req,res)=> {
-    console.log(req.body,req.session.user_id,`*********`);
     const map = req.body;
     const user = req.session.user_id;
     db.query(`DELETE FROM favorites
     WHERE users_id = $1 AND maps_id = $2`,[user,map])
-    .then(res.json({ sucess : true }))
-    .catch(console.log)
-  })
+      .then(res.json({ sucess : true }))
+      .catch(console.log);
+  });
 
   router.post("/", (req,res)=> {
     const {mapID} = req.body;
     const userID = req.session.user_id;
-   // console.log(req.body,`REQ BODY`);
-   // console.log(`!!!!!!`, mapID, userID);
+    // console.log(req.body,`REQ BODY`);
+    // console.log(`!!!!!!`, mapID, userID);
     db.query(`INSERT INTO favorites (users_id, maps_id) VALUES ( $1, $2) `,[userID, mapID])
-    .then(res.json({ sucess : true }))
-    .catch(console.log)
-  })
+      .then(res.json({ sucess : true }))
+      .catch(console.log);
+  });
 
 
 
