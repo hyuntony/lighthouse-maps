@@ -71,6 +71,20 @@ module.exports = (db) => {
       );
   });
 
+  router.post("/new/:map_id/update", (req, res) => {
+    const map = req.body;
+    const lat = Number(map.lat);
+    const lng = Number(map.lng);
+    const zoom = Number(map.zoom);
+    db.query(`UPDATE maps
+              SET center_coords = '{"lat": "${lat}", "lng": "${lng}"}', zoom = ${zoom}
+              WHERE ID = ${map.mapID}`)
+      .then(data => {
+        console.log("success");
+        return res.send(`http://localhost:8080/map/${map.mapID}`);
+      });
+  });
+
 
   router.get("/:map", (req, res) => {
     const userID = req.session.user_id;
