@@ -158,6 +158,7 @@ module.exports = (db) => {
     db.query(`DELETE FROM map_points
               WHERE id = ${reqdata.point_id}`)
       .then(res.json({ success: true }));
+  });
 
   router.get("/:map_id/edit", (req, res) => {
     const userID = req.session.user_id;
@@ -182,10 +183,10 @@ module.exports = (db) => {
     const mapID = req.params.map_id;
     console.log(` in delete route `);
     db.query(`DELETE FROM maps where maps.id = $1`, [mapID])
-    .then( () => {
-      res.redirect('/profile');
-    })
-  })
+      .then(() => {
+        res.redirect('/profile');
+      });
+  });
 
 
 
