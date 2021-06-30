@@ -29,7 +29,6 @@ $(() => {
       accessToken: 'pk.eyJ1Ijoic3Vkb2ZlciIsImEiOiJja3FkeWFhcmMwYWxhMnBtbHlvODhib3ZqIn0.3SgagUt_Y6_pJCpgzEopZg'
     }).addTo(mymap);
 
-    mymap.setView([Number(points.maps[0].center_coords.lat), Number(points.maps[0].center_coords.lng)], 13);
     // const usersParse = JSON.parse(users);
     if (points.maps[0].coords) {
       points.maps.forEach(elem => {

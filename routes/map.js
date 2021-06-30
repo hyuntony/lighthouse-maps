@@ -103,6 +103,26 @@ module.exports = (db) => {
       });
   });
 
+  router.get("/:map_id/edit", (req, res) => {
+    const userID = req.session.user_id;
+    const mapID = req.params.map_id;
+    db.query(`SELECT * FROM users
+              WHERE id = $1`, [userID])
+      .then(data => {
+        let user = '';
+        if (data.rows.length > 0) {
+          user = data.rows[0].name;
+        }
+        db.query(`SELECT * FROM maps WHERE id = $1 `, [mapID])
+          .then((data => {
+            const map = data.rows[0];
+            console.log("map***:", map);
+            const templateVars = { user, map, userID };
+            return res.render("edit_map", templateVars);
+          }));
+      });
+  });
+
 
   return router;
 };

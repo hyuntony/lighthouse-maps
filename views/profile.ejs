@@ -41,12 +41,18 @@
        <a href="/map/<%= map.id %>">
         <img src='<%= map.thumbnail_url %>' alt="Default Map Pic" width="100" height="100">
       </a>
-        <p2><%= map.name %></p3>
+        <p1><%= map.name %></p1>
         <div class="hoverDetails">
 
           <p3><%= map.description %></p3>
           <p2><%= map.date_created %></p2>
         </div>
+        <form method="GET" action="/map/<%=map.id%>/edit">
+          <button type="submit">Edit</button>
+        </form>
+        <form>
+          <button>Remove</button>
+        </form>
 
       </div>
 
