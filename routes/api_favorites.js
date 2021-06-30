@@ -33,18 +33,18 @@ module.exports = (db) => {
   });
 
   router.post("/delete", (req,res)=> {
-    const {map} = req.body;
+    const {mapID} = req.body;
     const user = req.session.user_id;
     db.query(`DELETE FROM favorites
-    WHERE users_id = $1 AND maps_id = $2`,[user,map])
+    WHERE users_id = $1 AND maps_id = $2`,[user,mapID])
       .then(res.json({ sucess : true }))
-      .catch(console.log);
+      .catch(e => console.log(e));
   });
 
   router.post("/", (req,res)=> {
     const {mapID} = req.body;
-    const userID = req.session.user_id;
-    db.query(`INSERT INTO favorites (users_id, maps_id) VALUES ( $1, $2) `,[userID, mapID])
+    const user = req.session.user_id;
+    db.query(`INSERT INTO favorites (users_id, maps_id) VALUES ( $1, $2) `,[user, mapID])
       .then(res.json({ sucess : true }))
       .catch(console.log);
   });
