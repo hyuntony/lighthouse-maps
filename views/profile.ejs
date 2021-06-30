@@ -47,13 +47,14 @@
           <p3><%= map.description %></p3>
           <p2><%= map.date_created %></p2>
         </div>
-        <form method="GET" action="/map/<%=map.id%>/edit">
+
+        <form method="GET" action="/map/<%= map.id %>/edit">
           <button type="submit">Edit</button>
         </form>
         <form>
           <button>Remove</button>
         </form>
-
+        <% } %>
       <h2>Your Favorites</h2>
         <% for (const fave of favorites) { %>
       <div class="mapBox">
