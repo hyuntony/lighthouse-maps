@@ -28,20 +28,20 @@
        <a href="/map/<%= map.id %>">
         <img src='<%= map.thumbnail_url %>' alt="Default Map Pic" width="100" height="100">
       </a>
-        <p1><%= map.name %></p1>
+        <p1><%= map.map_name %></p1>
         <div class="hoverDetails">
 
           <p3><%= map.description %></p3>
           <p2><%= map.date_created %></p2>
         </div>
-        <form method="GET" action="/map/<%=map.id%>/edit">
+
+        <form method="GET" action="/map/<%= map.id %>/edit">
           <button type="submit">Edit</button>
         </form>
-        <form>
-          <button>Remove</button>
+        <form method = 'POST' action = '/map/<%= map.id %>/delete'>
+          <button type="submit"> Remove</button>
         </form>
-      <% } %>
-
+        <% } %>
       <h2>Your Favorites</h2>
         <% for (const fave of favorites) { %>
       <div class="mapBox">

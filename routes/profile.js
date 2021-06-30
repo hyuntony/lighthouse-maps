@@ -10,7 +10,7 @@ const router  = express.Router();
 
 module.exports = (db) => {
   let templateVars = {};
-  router.get("/:profile", (req, res) => {
+  router.get('/', (req, res) => {
     const userID = req.session.user_id;
     // const mapID = req.params.map;
     db.query(`SELECT * FROM users
