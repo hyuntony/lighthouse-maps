@@ -23,13 +23,13 @@ module.exports = (db) => {
         }
         let query = `SELECT * FROM maps JOIN users ON users.id = users_id WHERE users.id = ${userID}`
         console.log(userID)
-        db.query(`SELECT * FROM maps JOIN users ON users.id = users_id WHERE users.id = $1`, [userID])
+        db.query(`SELECT users_id, maps.id, users.name, maps.description, maps.city, maps.thumbnail_url FROM maps JOIN users ON users.id = users_id WHERE users.id = $1`,[userID])
           .then(data => {
             console.log(`!!!!!!`, data.rows);
 
             const maps = data.rows;
             const templateVars = {maps, user, userID};
-            console.log(templateVars);
+            console.log(`MAPS`,maps);
             res.render('profile', templateVars)
         })
       .catch(err => {
