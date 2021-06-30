@@ -51,7 +51,7 @@ $(() => {
       url: '/api/favorites',
       data: { mapID }
     }).done(data => {
-      console.log(data);
+      //console.log(data);
     }
     );
 
@@ -67,7 +67,7 @@ $(() => {
       url: '/api/favorites/delete',
       data: { mapID }
     }).done(data => {
-      console.log(data);
+      //console.log(data);
     }
     );
 

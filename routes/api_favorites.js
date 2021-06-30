@@ -44,8 +44,6 @@ module.exports = (db) => {
   router.post("/", (req,res)=> {
     const {mapID} = req.body;
     const userID = req.session.user_id;
-    // console.log(req.body,`REQ BODY`);
-    // console.log(`!!!!!!`, mapID, userID);
     db.query(`INSERT INTO favorites (users_id, maps_id) VALUES ( $1, $2) `,[userID, mapID])
       .then(res.json({ sucess : true }))
       .catch(console.log);
