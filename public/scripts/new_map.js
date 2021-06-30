@@ -36,20 +36,31 @@ $(() => {
         zoomOffset: -1,
         accessToken: 'pk.eyJ1Ijoic3Vkb2ZlciIsImEiOiJja3FkeWFhcmMwYWxhMnBtbHlvODhib3ZqIn0.3SgagUt_Y6_pJCpgzEopZg'
       }).addTo(mymap);
+      // const groupOne = L.layerGroup().addTo(mymap);
 
       const onMapClick = function(e) {
+        // console.log(e);
         const editForm = createEditForm(e.latlng.lat, e.latlng.lng);
         let marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(mymap);
+        // marker.id = L.stamp(marker);
+        // console.log(marker.id);
+        // console.log(L.stamp(marker));
+        // mymap.on('click', () => {
+        //   mymap.removeLayer(marker);
+        // });
         marker.bindPopup(`${editForm}`).openPopup();
         $('#cancel-button').click((e) => {
           e.preventDefault();
+          // if (marker.id === 40) {
           mymap.removeLayer(marker);
+          // }
         });
         $('#myform').submit(function(e) {
           e.preventDefault();
           const data = $(this).serialize();
           $.post(`/map/new/${mapID}/points`, data)
             .then(
+              // marker.addTo(groupOne),
               $('#cancel-button').hide(),
               $('#add-button').hide(),
               marker.closePopup(),
