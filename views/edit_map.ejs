@@ -35,13 +35,24 @@
       <%- include('partials/_header') %>
     </header>
 
-   <h1> <%=map.name%> </h1>
+    <form id="title-update">
+      <input type="hidden" name="map_id" value="<%= map.id %>">
+      <input type="text" name="name" value="<%=map.name%>">
+      <button type="submit">Update Title</button>
+    </form>
 
 
 
 
 
-      <div id="mymap"></div>
+    <div id="mymap"></div>
+
+    <form id="description-update">
+      <input type="hidden" name="map_id" value="<%= map.id %>">
+      <input type="text" name="description" value="<%=map.description%>">
+      <button type="submit">Update Description</button>
+    </form>
+    <button id="edit-final">Finish Edit</button>
 
 
 

@@ -109,6 +109,7 @@ module.exports = (db) => {
       );
   });
 
+
   router.post("/new/:map_id/update", (req, res) => {
     const map = req.body;
     const lat = Number(map.lat);
@@ -120,6 +121,24 @@ module.exports = (db) => {
       .then(data => {
         return res.send(`/map/${map.mapID}`);
       });
+  });
+
+  // update map name
+  router.post("/title", (req, res) => {
+    const reqdata = req.body;
+    db.query(`UPDATE maps
+              SET name = $1
+              WHERE id = ${reqdata.map_id}`, [reqdata.name])
+      .then(res.json({ success: true }));
+  });
+
+  // update map description
+  router.post("/description", (req, res) => {
+    const reqdata = req.body;
+    db.query(`UPDATE maps
+              SET description = $1
+              WHERE id = ${reqdata.map_id}`, [reqdata.description])
+      .then(res.json({ success: true }));
   });
 
   // update point name and description

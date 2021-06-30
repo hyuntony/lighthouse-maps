@@ -37,12 +37,7 @@ const loadMarkers = (map, data, group) => {
           <input type="hidden" name="point_id" value="${point.id}">
           <button type="submit">Remove</button>
         </form>
-
       `);
-
-
-
-
     });
   }
 };
@@ -105,6 +100,7 @@ $(() => {
           });
       });
 
+      // create new marker with click on map
       const onMapClick = function(e) {
         let marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(mymap);
         const markerid = L.stamp(marker);
@@ -116,7 +112,6 @@ $(() => {
           mymap.removeLayer(marker);
         });
         $(`body`).on('submit', `#myform-${markerid}`, function(e) {
-          console.log("myform submitted");
           e.preventDefault();
           const data = $(this).serialize();
           $.post(`/map/new/${mapID}/points`, data)
@@ -136,16 +131,38 @@ $(() => {
 
       mymap.on('click', onMapClick);
 
+      // update map title
+      $(`body`).on('submit', '#title-update', function(e) {
+        e.preventDefault();
+        const data = $(this).serialize();
+        $.post(`/map/title`, data)
+          .then(
+            alert("Title Updated!")
+          )
+      })
 
+      // update map description
+      $(`body`).on('submit', '#description-update', function(e) {
+        e.preventDefault();
+        const data = $(this).serialize();
+        $.post(`/map/description`, data)
+          .then(
+            alert("Description Updated!")
+          );
+      });
 
-
-      // mymap.on('click', () => {
-      //   groupOne.clearLayers();
-
-      //   loadMarkers(mymap, dataObj, groupOne);
-      // });
+      //finish Edit sends the current center-coords and zoom levels
+      $('#edit-final').click((e) => {
+        e.preventDefault();
+        const centerCoords = mymap.getCenter();
+        const zoom = mymap.getZoom();
+        const { lat, lng } = centerCoords;
+        const data = { mapID, lat, lng, zoom};
+        $.post(`/map/new/${mapID}/update`, data)
+          .then(data => {
+            window.location.href = data;
+          });
+      });
 
     });
-
-
 });
