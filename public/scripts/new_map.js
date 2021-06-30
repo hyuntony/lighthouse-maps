@@ -64,8 +64,19 @@ $(() => {
 
       $('#finish-button').click((e) => {
         e.preventDefault();
-        $.post(`/map/new/`)
-      })
+        const centerCoords = mymap.getCenter();
+        const zoom = mymap.getZoom();
+        const { lat, lng } = centerCoords;
+        const data = { mapID, lat, lng, zoom};
+        console.log(data);
+        $.post(`/map/new/${mapID}/update`, data)
+          .then(data => {
+            console.log(data);
+
+            window.location.href = data;
+
+          });
+      });
 
     });
 });
