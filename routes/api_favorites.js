@@ -10,32 +10,28 @@ const router  = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    const userID = req.session.user_id;
-    const mapID = req.params.map;
-    db.query(`SELECT * FROM users
-              WHERE id = $1`, [userID])
-      .then(data => {
-        let user = '';
-        if (data.rows.length > 0) {
-          user = data.rows[0].name;
-        }
-        let query = `SELECT * FROM maps`;
+    let query = `SELECT * FROM favorites`;
     console.log(query);
     db.query(query)
       .then(data => {
-        const maps = data.rows;
-        const templateVars = {maps, user, userID};
-        console.log(templateVars);
-        res.render('maps', templateVars)
+        const favorites = data.rows;
+        res.json({ favorites });
       })
       .catch(err => {
         res
           .status(500)
           .json({ error: err.message });
       });
-      });
   });
+
+  router.post("/", (req,res)=> {
+    const {mapID} = req.body;
+    const userID = req.session.user_id;
+    console.log(`!!!!!!`, mapID, userID);
+    db.query(`insert into favorites (users_id, maps_id) VALUES ($1, $2) `, [Number(userID), Number(mapID)])
+    .then(res.send(`ok`))
+    .catch(console.log)
+  })
+
   return router;
 };
-
-

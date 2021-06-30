@@ -36,9 +36,10 @@ module.exports = (db) => {
 
   router.get("/:map_id/points", (req, res) => {
     let query = `SELECT * FROM maps
-    JOIN map_points on map_points.maps_id = maps.id
+    LEFT JOIN map_points on map_points.maps_id = maps.id
     WHERE maps.id = $1`;
     console.log(query);
+    console.log(`!!!!!!!!!!!!!`,req.params.map_id);
     db.query(query,[req.params.map_id])
       .then(data => {
         const maps = data.rows;

@@ -83,11 +83,11 @@ module.exports = (db) => {
           user = data.rows[0].name;
         }
         db.query(`SELECT * FROM maps WHERE id = $1 `, [mapID])
-          .then((data => {
-            const map = data.rows[0];
-            console.log(map);
-            const templateVars = { user, map };
-            return res.render("map", templateVars);
+        .then((data => {
+          const map = data.rows[0];
+          console.log(map);
+          const templateVars = { user, map, userID, mapID };
+          return res.render("map", templateVars);
 
           }));
       });
