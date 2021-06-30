@@ -52,8 +52,8 @@ $(() => {
             .then(
               $('#cancel-button').hide(),
               $('#add-button').hide(),
+              marker.closePopup(),
               marker.unbindPopup(),
-              marker.closePopup()
 
             );
         });
