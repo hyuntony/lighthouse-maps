@@ -116,12 +116,20 @@ module.exports = (db) => {
         db.query(`SELECT * FROM maps WHERE id = $1 `, [mapID])
           .then((data => {
             const map = data.rows[0];
-            console.log("map***:", map);
             const templateVars = { user, map, userID };
             return res.render("edit_map", templateVars);
           }));
       });
   });
+
+  router.post('/:map_id/delete', (req, res) => {
+    const mapID = req.params.map_id;
+    console.log(` in delete route `);
+    db.query(`DELETE FROM maps where maps.id = $1`, [mapID])
+    .then( () => {
+      res.redirect('/profile');
+    })
+  })
 
 
   return router;
