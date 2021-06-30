@@ -4,7 +4,20 @@
 
 
 $(() => {
+  $('#blackIcon').hide();
+  $("#goldIcon").hide();
+  const userid = userID;
+  $.get(`/api/favorites/${userid}/${mapID}`)
+  .then(data => {
+    console.log(data,`data.rows`);
+    if (data.length > 0){
+      $("#goldIcon").show();
 
+    } else {$('#blackIcon').show();}
+  })
+
+
+  console.log(`!!!!!!`, userID);
 
 
   $.ajax({
@@ -48,16 +61,35 @@ $(() => {
 
     })
 
-  $('#favorite').click(function (e) {
+    $('#blackIcon').click(function (e) {
+      $('#goldIcon').show();
+      $('#blackIcon').hide();
+      e.preventDefault();
+      const mapID = $( "#sample" ).val();
+      console.log(mapID);
+      $.ajax({
+        method: 'POST',
+        url: '/api/favorites',
+        data: { mapID }
+      }).done( data => {
+        console.log(data);
+      }
+    )
+
+    });
+
+  $('#goldIcon').click(function (e) {
+    $('#blackIcon').show();
+    $('#goldIcon').hide();
     e.preventDefault();
     const mapID = $( "#sample" ).val();
     console.log(mapID);
     $.ajax({
       method: 'POST',
-      url: '/api/favorites',
+      url: '/api/favorites/delete',
       data: { mapID }
-    }).done( favorites => {
-      console.log(favorites);
+    }).done( data => {
+      console.log(data);
     }
   )
 

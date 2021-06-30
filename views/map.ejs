@@ -41,10 +41,10 @@
    <h1> <%=map.name%> </h1>
 
 
-   <div id="favorite">
+   <div>
     <input type="hidden" value="<%= mapID %>" id="sample" name="sample"/>
-    <a href=""></a>
-   <img src='/images/favorite_icon.png'alt="Favorite Map" width="20" height="20">
+    <img id="blackIcon" src="/images/favorite_icon_black.png" width="20" height="20">
+   <img id="goldIcon" src='/images/favorite_icon.png'alt="Favorite Map" width="20" height="20">
   </div>
 
 
@@ -54,8 +54,9 @@
 
 
 
-
       <script>const mapID = <%= map.id %></script>
+      <script>const userID= <%= userID %></script>
+
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
 

@@ -11,7 +11,7 @@ module.exports = (db) => {
         if (data.rows.length > 0) {
           user = data.rows[0].name;
         }
-        const templateVars = { user };
+        const templateVars = { user, userID };
         return res.render("new_map", templateVars);
       });
   });

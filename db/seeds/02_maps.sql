@@ -1,7 +1,6 @@
 --map table seeds here (Example)
 
 INSERT INTO maps (
-  id,
   users_id,
   name,
   description,
@@ -13,7 +12,6 @@ INSERT INTO maps (
   )
 
 VALUES (
-  1,
   '1',
   'Pub Crawls',
   'This is the best pub crawl the world has ever seen!',
@@ -24,7 +22,6 @@ VALUES (
   NOW()
 ),
 (
-  2,
   '2',
   'Scenic walk',
   'A nice quiet walk through high park',
@@ -35,7 +32,6 @@ VALUES (
   NOW()
 ),
 (
-  3,
   '3',
   'Scenes from Scott Pilgrim',
   'Best scenes from the best movie!',
