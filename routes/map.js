@@ -16,6 +16,64 @@ module.exports = (db) => {
       });
   });
 
+
+  router.get("/new/:map_id", (req, res) => {
+    const userID = req.session.user_id;
+    const mapID = req.params.map_id;
+    db.query(`SELECT * FROM users
+    WHERE id = $1`, [userID])
+      .then(data => {
+        let user = '';
+        if (data.rows.length > 0) {
+          user = data.rows[0].name;
+        }
+        db.query(`SELECT * FROM maps WHERE id = $1 `, [mapID])
+          .then((data => {
+            const map = data.rows[0];
+            const templateVars = { userID, user, map };
+            return res.render("new_map_points", templateVars);
+          }));
+      });
+  });
+
+  router.get("/:map_id/edit", (req, res) => {
+    const userID = req.session.user_id;
+    const mapID = req.params.map_id;
+    db.query(`SELECT * FROM users
+              WHERE id = $1`, [userID])
+      .then(data => {
+        let user = '';
+        if (data.rows.length > 0) {
+          user = data.rows[0].name;
+        }
+        db.query(`SELECT * FROM maps WHERE id = $1 `, [mapID])
+          .then((data => {
+            const map = data.rows[0];
+            const templateVars = { user, map, userID };
+            return res.render("edit_map", templateVars);
+          }));
+      });
+  });
+
+    router.get("/:map", (req, res) => {
+      const userID = req.session.user_id;
+      const mapID = req.params.map;
+      db.query(`SELECT * FROM users
+      WHERE id = $1`, [userID])
+      .then(data => {
+        let user = '';
+        if (data.rows.length > 0) {
+          user = data.rows[0].name;
+        }
+        db.query(`SELECT * FROM maps WHERE id = $1 `, [mapID])
+        .then((data => {
+          const map = data.rows[0];
+          const templateVars = { user, map, userID, mapID };
+          return res.render("map", templateVars);
+        }));
+      });
+    });
+
   router.post("/new", (req, res) => {
     const userID = req.session.user_id;
     const { title, description, city } = req.body;
@@ -36,25 +94,6 @@ module.exports = (db) => {
       });
   });
 
-  router.get("/new/:map_id", (req, res) => {
-    const userID = req.session.user_id;
-    const mapID = req.params.map_id;
-    db.query(`SELECT * FROM users
-              WHERE id = $1`, [userID])
-      .then(data => {
-        let user = '';
-        if (data.rows.length > 0) {
-          user = data.rows[0].name;
-        }
-        db.query(`SELECT * FROM maps WHERE id = $1 `, [mapID])
-          .then((data => {
-            const map = data.rows[0];
-            const templateVars = { userID, user, map };
-            return res.render("new_map_points", templateVars);
-          }));
-      });
-  });
-
   //INSERT new map points into map_points table
   router.post("/new/:map_id/points", (req, res) => {
     const mapID = req.params.map_id;
@@ -63,10 +102,10 @@ module.exports = (db) => {
     const lng = Number(point.lng);
 
     db.query(`INSERT INTO map_points (maps_id, name, description, coords)
-              VALUES ($1, $2, $3, '{"lat": "${lat}", "lng": "${lng}" }')
-              RETURNING id`, [mapID, point.name, point.description])
+    VALUES ($1, $2, $3, '{"lat": "${lat}", "lng": "${lng}" }')
+    RETURNING id`, [mapID, point.name, point.description])
       .then(
-        res.json({ sucess: true })
+        res.json({ success: true })
       );
   });
 
@@ -76,52 +115,33 @@ module.exports = (db) => {
     const lng = Number(map.lng);
     const zoom = Number(map.zoom);
     db.query(`UPDATE maps
-              SET center_coords = '{"lat": "${lat}", "lng": "${lng}"}', zoom = ${zoom}
-              WHERE ID = ${map.mapID}`)
+    SET center_coords = '{"lat": "${lat}", "lng": "${lng}"}', zoom = ${zoom}
+    WHERE ID = ${map.mapID}`)
       .then(data => {
-        return res.send(`http://localhost:8080/map/${map.mapID}`);
+        return res.send(`/map/${map.mapID}`);
       });
   });
 
+  // update point name and description
+  router.post("/point/update", (req, res) => {
+    const reqdata = req.body;
 
-  router.get("/:map", (req, res) => {
-    const userID = req.session.user_id;
-    const mapID = req.params.map;
-    db.query(`SELECT * FROM users
-              WHERE id = $1`, [userID])
-      .then(data => {
-        let user = '';
-        if (data.rows.length > 0) {
-          user = data.rows[0].name;
-        }
-        db.query(`SELECT * FROM maps WHERE id = $1 `, [mapID])
-          .then((data => {
-            const map = data.rows[0];
-            const templateVars = { user, map, userID, mapID };
-            return res.render("map", templateVars);
-          }));
-      });
+    db.query(`UPDATE map_points
+              SET name = $1, description = $2
+              WHERE id = ${reqdata.point_id}`, [reqdata.name, reqdata.description])
+      .then(res.json({ success: true }));
   });
 
-  router.get("/:map_id/edit", (req, res) => {
-    const userID = req.session.user_id;
-    const mapID = req.params.map_id;
-    db.query(`SELECT * FROM users
-              WHERE id = $1`, [userID])
-      .then(data => {
-        let user = '';
-        if (data.rows.length > 0) {
-          user = data.rows[0].name;
-        }
-        db.query(`SELECT * FROM maps WHERE id = $1 `, [mapID])
-          .then((data => {
-            const map = data.rows[0];
-            console.log("map***:", map);
-            const templateVars = { user, map, userID };
-            return res.render("edit_map", templateVars);
-          }));
-      });
+  // delete point
+  router.post("/point/delete", (req, res) => {
+    const reqdata = req.body;
+
+    db.query(`DELETE FROM map_points
+              WHERE id = ${reqdata.point_id}`)
+      .then(res.json({ success: true }));
   });
+
+
 
 
   return router;

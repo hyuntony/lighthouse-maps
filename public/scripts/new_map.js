@@ -1,7 +1,7 @@
 
-const createEditForm = (lat, lng) => {
+const createEditForm = (lat, lng, id) => {
   const editForm = (`
-    <form id="myform">
+    <form id="myform-${id}">
       <label for="maps_id">map_id:</label>
       <input type="text" name="maps_id" value="${mapID}" disabled="disabled" readonly>
       <label for="lat">Lat:</label>
@@ -12,9 +12,9 @@ const createEditForm = (lat, lng) => {
       <input type="text" name="name">
       <label for="description">Description:</label>
       <input type="text" name="description">
-      <button id="cancel-button">Cancel</button>
       <button id="add-button" type="submit">Add map point</button>
       </form>
+      <button id="cancel-button-${id}">Cancel</button>
       `);
   return editForm;
 };
@@ -36,31 +36,23 @@ $(() => {
         zoomOffset: -1,
         accessToken: 'pk.eyJ1Ijoic3Vkb2ZlciIsImEiOiJja3FkeWFhcmMwYWxhMnBtbHlvODhib3ZqIn0.3SgagUt_Y6_pJCpgzEopZg'
       }).addTo(mymap);
-      // const groupOne = L.layerGroup().addTo(mymap);
 
       const onMapClick = function(e) {
-        // console.log(e);
-        const editForm = createEditForm(e.latlng.lat, e.latlng.lng);
         let marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(mymap);
-        // marker.id = L.stamp(marker);
-        // console.log(marker.id);
-        // console.log(L.stamp(marker));
-        // mymap.on('click', () => {
-        //   mymap.removeLayer(marker);
-        // });
+        const markerid = L.stamp(marker);
+        const editForm = createEditForm(e.latlng.lat, e.latlng.lng, markerid);
+
         marker.bindPopup(`${editForm}`).openPopup();
-        $('#cancel-button').click((e) => {
+        $('body').on('click', `#cancel-button-${markerid}`, (e) => {
           e.preventDefault();
-          // if (marker.id === 40) {
           mymap.removeLayer(marker);
-          // }
         });
-        $('#myform').submit(function(e) {
+        $(`body`).on('submit', `#myform-${markerid}`, function(e) {
+          console.log("myform submitted");
           e.preventDefault();
           const data = $(this).serialize();
           $.post(`/map/new/${mapID}/points`, data)
             .then(
-              // marker.addTo(groupOne),
               $('#cancel-button').hide(),
               $('#add-button').hide(),
               marker.closePopup(),
@@ -68,7 +60,9 @@ $(() => {
             );
         });
       };
+
       mymap.on('click', onMapClick);
+
       $('#finish-button').click((e) => {
         e.preventDefault();
         const centerCoords = mymap.getCenter();
