@@ -1,15 +1,19 @@
 $(() => {
   $('#blackIcon').hide();
   $("#goldIcon").hide();
-  const userid = userID;
-  $.get(`/api/favorites/${userid}/${mapID}`)
-    .then(data => {
-      if (data.length > 0) {
-        $("#goldIcon").show();
-      } else {
-        $('#blackIcon').show();
-      }
-    });
+
+  const checkFavorites = () => {
+    const userid = userID;
+    $.get(`/api/favorites/${userid}/${mapID}`)
+      .then(data => {
+        if (data.length > 0) {
+          $("#goldIcon").show();
+        } else {
+          $('#blackIcon').show();
+        }
+      });
+  };
+  checkFavorites();
 
   $.ajax({
     method: "GET",
@@ -54,7 +58,7 @@ $(() => {
       console.log(data);
     }
     );
-
+    checkFavorites();
   });
 
   $('#goldIcon').click(function(e) {
@@ -70,6 +74,6 @@ $(() => {
       console.log(data);
     }
     );
-
+    checkFavorites();
   });
 });

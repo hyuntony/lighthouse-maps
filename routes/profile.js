@@ -9,6 +9,7 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
+  let templateVars = {};
   router.get("/:profile", (req, res) => {
     const userID = req.session.user_id;
     // const mapID = req.params.map;
@@ -19,19 +20,30 @@ module.exports = (db) => {
         if (data.rows.length > 0) {
           user = data.rows[0].name;
         }
-        db.query(`SELECT users_id, maps.id, users.name, maps.description, maps.city, maps.thumbnail_url FROM maps JOIN users ON users.id = users_id WHERE users.id = $1`,[userID])
+        db.query(`SELECT maps.name as map_name, users_id, maps.id, users.name, maps.description, maps.city, maps.thumbnail_url, maps.date_created FROM maps JOIN users ON users.id = users_id WHERE users.id = $1`,[userID])
           .then(data => {
             const maps = data.rows;
-            const templateVars = {maps, user, userID};
-            res.render('profile', templateVars);
+            console.log(userID,`*****`);
+            db.query(`SELECT maps.name, maps_id, maps.description, maps.city, maps.thumbnail_url, maps.description, maps.date_created
+            FROM favorites JOIN users on users.id = users_id JOIN maps on maps.id = maps_id WHERE users.id = $1`, [userID])
+            .then(data => {
+              console.log(`great success`, data.rows);
+              const favorites = data.rows;
+              templateVars =  {maps, user, userID, favorites }
+              res.render('profile', templateVars);
+            })
+
           })
           .catch(err => {
             console.log(`FAIL`);
             res
-              .status(500)
-              .json({ error: err.message });
+            .status(500)
+            .json({ error: err.message });
           });
+        });
       });
-  });
-  return router;
-};
+      return router;
+    };
+
+
+

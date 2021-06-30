@@ -34,28 +34,46 @@
     <h1>Lighthouse Maps</h1>
 
 
-    <div id="mapContainer">
+    <div id="yourMapContainer">
+        <h2>Your Maps</h2>
+        <% for (const map of maps) { %>
+      <div class="mapBox">
+        <a href="/map/<%= map.id %>">
+          <img src='<%= map.thumbnail_url %>' alt="Default Map Pic" width="100" height="100">
+        </a>
+          <p2><%= map.map_name %></p3>
+          <div class="hoverDetails">
 
-      <% for (const map of maps) { %>
-     <div class="mapBox">
-       <a href="/map/<%= map.id %>">
-        <img src='<%= map.thumbnail_url %>' alt="Default Map Pic" width="100" height="100">
-      </a>
-        <p2><%= map.name %></p3>
-        <div class="hoverDetails">
-
-          <p3><%= map.description %></p3>
-          <p2><%= map.date_created %></p2>
+            <p3><%= map.description %></p3>
+            <p2><%= map.date_created %></p2>
+          </div>
         </div>
-
-      </div>
-
-
-          <% } %>
-
+            <% } %>
     </div>
 
+    <div id='yourFavoritesContainer'>
 
+      <h2>Your Favorites</h2>
+        <% for (const fave of favorites) { %>
+      <div class="mapBox">
+        <a href="/map/<%= fave.maps_id %>">
+          <img src='<%= fave.thumbnail_url %>' alt="Default Map Pic" width="100" height="100">
+        </a>
+          <p2><%= fave.name %></p3>
+          <div class="hoverDetails">
+
+            <p3><%= fave.description %></p3>
+            <p2><%= fave.date_created %></p2>
+          </div>
+        </div>
+            <% } %>
+
+
+
+
+
+
+    </div>
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
 
