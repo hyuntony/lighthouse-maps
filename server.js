@@ -85,7 +85,6 @@ app.get("/", (req, res) => {
 
       }
       const templateVars = { user, userID };
-      console.log(`*******`, templateVars);
       return res.render("index", templateVars);
     });
 });

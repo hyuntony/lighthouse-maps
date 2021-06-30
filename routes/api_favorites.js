@@ -33,7 +33,7 @@ module.exports = (db) => {
   });
 
   router.post("/delete", (req,res)=> {
-    const map = req.body;
+    const {map} = req.body;
     const user = req.session.user_id;
     db.query(`DELETE FROM favorites
     WHERE users_id = $1 AND maps_id = $2`,[user,map])

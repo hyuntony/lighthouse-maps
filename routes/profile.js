@@ -10,13 +10,11 @@ const router  = express.Router();
 
 module.exports = (db) => {
   router.get("/:profile", (req, res) => {
-    console.log(`**************`);
     const userID = req.session.user_id;
     // const mapID = req.params.map;
     db.query(`SELECT * FROM users
               WHERE id = $1`, [userID])
       .then(data => {
-        //console.log(`!!!!!!`, data.rows);
         let user = '';
         if (data.rows.length > 0) {
           user = data.rows[0].name;
@@ -25,7 +23,6 @@ module.exports = (db) => {
           .then(data => {
             const maps = data.rows;
             const templateVars = {maps, user, userID};
-            console.log(`MAPS`,maps);
             res.render('profile', templateVars);
           })
           .catch(err => {
