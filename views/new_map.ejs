@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/new_map.css" type="text/css" />
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
 
   </head>
@@ -14,18 +15,22 @@
     <header>
       <%- include('partials/_header') %>
     </header>
-    <h1>Create new map</h1>
-    <form method="post" action="/map/new">
-      <label for="title">Title:</label>
-      <input type="text" name="title">
-      <label for="description">Description:</label>
-      <input type="text" name="description">
-      <label for="city">City:</label>
-      <select name="city">
-        <option value="Toronto">Toronto</option>
-        <option value="Vancouver">Vancouver</option>
-      </select>
-      <button type="submit">Next</button>
-    </form>
+    <div id="newMapBody">
+      <h1>Create new map</h1>
+      <div id="newMapDiv">
+      <form id="newMapForm" method="post" action="/map/new">
+        <label for="title">Title:</label>
+        <input type="text" name="title">
+        <label for="description">Description:</label>
+        <input type="text" name="description">
+        <label for="city">City:</label>
+        <select name="city">
+          <option value="Toronto">Toronto</option>
+          <option value="Vancouver">Vancouver</option>
+        </select>
+        <button  class="btn btn-primary"  id="nextButton" type="submit">Next</button>
+      </form>
+    </div>
+    </div>
   </body>
 </html>
