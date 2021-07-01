@@ -5,11 +5,19 @@
   justify-content: center;
 }
 
+.edit-remove-button {
+  display: flex;
+  position: absolute;
+  top: 0;
+}
+
 .mapContainer {
+  width: 100%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   z-index: 1;
+  margin-bottom: 10px;
 
 
   .totalMapBox {
@@ -38,6 +46,10 @@
       height: 40%;
       position: absolute;
       bottom: 0;
+
+      .time {
+        font-size: smaller;
+      }
     }
   }
 }
