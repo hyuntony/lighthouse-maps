@@ -8,9 +8,6 @@ $(() => {
 
   $(".totalMapBox").height($(".totalMapBox").width());
 
-  const time = $("#time").val();
-  const adjustedTime = timeago.format(time);
 
-  $()
 
 });
