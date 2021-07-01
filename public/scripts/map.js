@@ -59,7 +59,7 @@ $(() => {
     );
     setTimeout(() => {
       checkFavorites();
-    }, 200);
+    }, 100);
   });
 
   $('#goldIcon').click(function(e) {
@@ -75,6 +75,6 @@ $(() => {
     );
     setTimeout(() => {
       checkFavorites();
-    }, 200);
+    }, 100);
   });
 });
