@@ -48,7 +48,7 @@ $(() => {
     $('#goldIcon').show();
     $('#blackIcon').hide();
     e.preventDefault();
-    const mapID = $("#sample").val();
+    const mapID = $("#favorite").val();
     $.ajax({
       method: 'POST',
       url: '/api/favorites',
@@ -64,7 +64,7 @@ $(() => {
     $('#blackIcon').show();
     $('#goldIcon').hide();
     e.preventDefault();
-    const mapID = $("#sample").val();
+    const mapID = $("#favorite").val();
     $.ajax({
       method: 'POST',
       url: '/api/favorites/delete',
