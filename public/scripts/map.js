@@ -8,8 +8,10 @@ $(() => {
       .then(data => {
         if (data.length > 0) {
           $("#goldIcon").show();
+          $('#blackIcon').hide();
         } else {
           $('#blackIcon').show();
+          $("#goldIcon").hide();
         }
       });
   };
@@ -45,8 +47,6 @@ $(() => {
   });
 
   $('#blackIcon').click(function(e) {
-    $('#goldIcon').show();
-    $('#blackIcon').hide();
     e.preventDefault();
     const mapID = $("#favorite").val();
     $.ajax({
@@ -57,12 +57,12 @@ $(() => {
       console.log(data);
     }
     );
-    checkFavorites();
+    setTimeout(() => {
+      checkFavorites();
+    }, 200);
   });
 
   $('#goldIcon').click(function(e) {
-    $('#blackIcon').show();
-    $('#goldIcon').hide();
     e.preventDefault();
     const mapID = $("#favorite").val();
     $.ajax({
@@ -73,6 +73,8 @@ $(() => {
       console.log(data);
     }
     );
-    checkFavorites();
+    setTimeout(() => {
+      checkFavorites();
+    }, 200);
   });
 });
