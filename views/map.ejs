@@ -22,7 +22,7 @@
  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
  crossorigin=""></script>
   <!---<script src="scripts/map.js"></script> --->
-  <style>#mymap { height: 550px; width: 550px }</style>
+
 
 
 
@@ -41,11 +41,11 @@
 
 
 
-  <div>
+  <div id="mapBox">
       <h1> <%=map.name%> </h1>
 
 
-    <div id="mapBox">
+    <div id="favoriteBox">
         <input type="hidden" value="<%= mapID %>" id="favorite" name="sample"/>
         <img id="blackIcon" src="/images/favorite_icon_black.png" width="20" height="20">
       <img id="goldIcon" src='/images/favorite_icon.png'alt="Favorite Map" width="20" height="20">
