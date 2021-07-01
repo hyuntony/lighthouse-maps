@@ -1,5 +1,6 @@
 const express = require('express');
 const router  = express.Router();
+const timeago = require('timeago.js');
 
 module.exports = (db) => {
   router.get("/new", (req, res) => {
@@ -68,7 +69,8 @@ module.exports = (db) => {
         db.query(`SELECT * FROM maps WHERE id = $1 `, [mapID])
         .then((data => {
           const map = data.rows[0];
-          const templateVars = { user, map, userID, mapID };
+          const date = timeago.format(map.date_created);
+          const templateVars = { user, map, userID, mapID, date };
           return res.render("map", templateVars);
         }));
       });

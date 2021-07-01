@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
 
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/map.css" type="text/css" />
     <!-- leaflet api -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -21,7 +22,8 @@
  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
  crossorigin=""></script>
   <!---<script src="scripts/map.js"></script> --->
-  <style>#mymap { height: 550px; width: 550px }</style>
+
+
 
 
 
@@ -38,24 +40,30 @@
       <%- include('partials/_header') %>
     </header>
 
-   <h1> <%=map.name%> </h1>
-
-
-   <div>
-    <input type="hidden" value="<%= mapID %>" id="favorite" name="sample"/>
-    <img id="blackIcon" src="/images/favorite_icon_black.png" width="20" height="20">
-   <img id="goldIcon" src='/images/favorite_icon.png'alt="Favorite Map" width="20" height="20">
-  </div>
-
-
-      <div id="mymap"></div>
 
 
 
 
 
+    <div id="mapBox">
+
+      <div id="favoriteBox">
+        <h1 id="mapTitle"> <%=map.name%> </h1>
+          <input type="hidden" value="<%= mapID %>" id="favorite" name="sample"/>
+          <img id="blackIcon" src="/images/favorite_icon_grey.png" width="20" height="20">
+        <img id="goldIcon" src='/images/favorite_icon.png'alt="Favorite Map" width="20" height="20">
+        </div>
+
+    <div id="mapAndDesc">
+        <div id="mymap"></div>
+      <div id="mapInfo">
+        <h3> <%= map.description %> </h3>
+        <h4>  <%= date %>  </h4>
+      </div>
+    </div>
       <script>const mapID = <%= map.id %></script>
       <script>const userID= "<%= userID %>"</script>
+
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>

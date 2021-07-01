@@ -1,0 +1,28 @@
+#mapBox {
+  margin: 75px;
+}
+
+#mymap {
+  height: 550px;
+  width: 550px;
+  margin: 10px;
+}
+
+#favoriteBox {
+  margin: 5px;
+}
+
+#mapAndDesc {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+}
+
+#mapInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+#mapTitle {
+  font-weight: bold;
+}

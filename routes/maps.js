@@ -7,6 +7,7 @@
 
 const express = require('express');
 const router  = express.Router();
+const timeago = require('timeago.js');
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -23,6 +24,9 @@ module.exports = (db) => {
         db.query(query)
           .then(data => {
             const maps = data.rows;
+            maps.forEach((map) => {
+              map.date_created = timeago.format(map.date_created);
+            })
             const templateVars = {maps, user, userID};
             res.render('maps', templateVars);
           })

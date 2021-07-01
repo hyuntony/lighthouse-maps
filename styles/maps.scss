@@ -1,0 +1,55 @@
+.new-map-form {
+  margin-top: 80px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.edit-remove-button {
+  display: flex;
+  position: absolute;
+  top: 0;
+}
+
+.mapContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  z-index: 1;
+  margin-bottom: 10px;
+
+
+  .totalMapBox {
+    flex-basis: 45%;
+    position: relative;
+
+    .mapBox {
+      width: 90%;
+      height: 90%;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+
+
+    }
+
+    .hoverDetails {
+      overflow: scroll;
+      display: flex;
+      flex-direction: column;
+      border: 3px solid #73AD21;
+      background-color: white;
+      width: 70%;
+      height: 40%;
+      position: absolute;
+      bottom: 0;
+
+      .time {
+        font-size: smaller;
+      }
+    }
+  }
+}

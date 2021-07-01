@@ -10,20 +10,10 @@
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
 
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-    <!-- leaflet api -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin=""/>
+    <link rel="stylesheet" href="/styles/maps.css" type="text/css" />
 
-    <!-- Make sure you put this AFTER Leaflet's CSS -->
- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
- integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
- crossorigin=""></script>
-
-  <style>#mapid { height: 180px; }</style>
-
-
-
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/maps.js"></script>
 
   </head>
 
@@ -31,24 +21,24 @@
     <header>
       <%- include('partials/_header') %>
     </header>
-    <h1>Lighthouse Maps</h1>
-    <form method="get" action="/map/new">
-      <button class="btn btn-primary" type="submit">Create New Map</button>
+
+    <form class="new-map-form" method="get" action="/map/new">
+      <button class="btn btn-success" type="submit">Create New Map</button>
     </form>
 
 
-    <div id="mapContainer">
+    <div class="mapContainer">
 
       <% for (const map of maps) { %>
      <div class="totalMapBox">
        <a class="mapBox" href="/map/<%= map.id %>">
-        <img src='<%= map.thumbnail_url %>' alt="Default Map Pic" width="100" height="100">
-      </a>
-        <p2><%= map.name %></p3>
+        <img src='<%= map.thumbnail_url %>' alt="Default Map Pic">
+       </a>
 
         <div class="hoverDetails">
-          <p3 class="hide"><%= map.description %></p3>
-          <p2 class="hide"><%= map.date_created %></p2>
+          <h3><%= map.name %></h3>
+          <p><%= map.description %></p>
+          <p class="time"><%= map.date_created %></p>
         </div>
 
       </div>
@@ -60,7 +50,5 @@
 
 
 
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
   </body>
 </html>
