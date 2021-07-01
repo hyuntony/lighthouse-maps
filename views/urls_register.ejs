@@ -6,9 +6,10 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-
+    <link rel="stylesheet" href="/styles/register.css" type="text/css" />
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+
   </head>
 
   <body>
@@ -16,7 +17,7 @@
       <%- include('partials/_header') %>
     </header>
     <h1>Register</h1>
-    <form class="form-inline" action="/register" method="POST">
+    <form id="registerForm" class="form-inline" action="/register" method="POST">
       <label for="email">email:</label>
       <input type="email" name="email">
       <label for="name">name:</label>
