@@ -1,25 +1,29 @@
+
+<head>
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
 <header>
-  <nav>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="left-container">
-      <a class="navbar-brand" href="/maps">Lighthouse Maps</a>
+      <a class="btn btn-primary" href="/maps">Lighthouse Maps</a>
       <% if (user) { %>
-      <a class="navbar-profile" href="/profile">Profile</a>
+      <a class="btn btn-primary" href="/profile">Profile</a>
       <% } else { %>
         <div></div>
         <% } %>
     </div>
     <div class="right-container">
       <% if (user) { %>
-        <label>-Logged In As: <%= user %>-</label>
+        <label class="navbar-brand mb-0 h1">Logged In As: <%= user %></label>
         <form method="POST" action="/login/logout">
-          <button type="submit">Logout</button>
+          <button class="btn btn-danger" type="submit">Logout</button>
         </form>
       <% } else { %>
         <form method="GET" action="/login">
-          <button type="submit">Login</button>
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
           </form>
         <% } %>
     </div>
-
   </nav>
 </header>

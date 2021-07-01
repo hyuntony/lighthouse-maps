@@ -7,3 +7,26 @@ body {
     color: #244751;
   }
 }
+
+// navbar
+
+.right-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+//maps hover
+
+.hide {
+  visibility:hidden;
+}
+
+.hoverDetails:hover + .hide {
+  visibility: visible;
+  color: black;
+}
+
+.totalMapBox {
+  border: 3px solid black;
+  margin: 3px;
+}
