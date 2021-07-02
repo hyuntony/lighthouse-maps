@@ -13,12 +13,12 @@ INSERT INTO maps (
 
 VALUES (
   '1',
-  'Pub Crawls',
-  'This is the best pub crawl the world has ever seen!',
+  'Secret Bars',
+  'Join me in a walk around downtown Toronto for some great secret gems!',
   'Toronto',
   '/images/default_map.png',
-  '{"lat": "43.65466545346492", "lng": "-79.38810835706505"}',
-  4,
+  '{"lat": "43.65511465680141", "lng": "-79.40334586193786"}',
+  16,
   NOW()
 ),
 (
@@ -28,7 +28,7 @@ VALUES (
   'Toronto',
   '/images/default_map.png',
   '{"lat": "43.64913395525846", "lng": "-79.4679562680143"}',
-  7,
+  13,
   NOW()
 ),
 (
@@ -38,7 +38,7 @@ VALUES (
   'Toronto',
   '/images/default_map.png',
   '{"lat": "43.66508594101991", "lng": "-79.4115507922296"}',
-  4,
+  13,
   NOW()
 );
 
