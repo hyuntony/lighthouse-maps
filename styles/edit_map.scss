@@ -1,7 +1,8 @@
 #mymap {
   height: 550px;
   width: 550px;
-  margin: 75px;
+  margin-top: 85px;
+  margin-left: 15px;
   z-index: 1;
 }
 
@@ -11,8 +12,7 @@
 }
 
 .edit-details{
-  margin-top: 75px;
-  margin-right: 10px;
+  margin: 15px;
   display: flex;
   flex-direction: column;
   width: 550px;
