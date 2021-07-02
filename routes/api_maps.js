@@ -1,6 +1,6 @@
 const express = require('express');
 const router  = express.Router();
-//maps API resource
+// Maps API resource
 module.exports = (db) => {
   router.get("/", (req, res) => {
     let query = `SELECT * FROM maps`;
