@@ -1,20 +1,21 @@
 
 const createEditForm = (lat, lng, id) => {
   const editForm = (`
-    <form id="myform-${id}">
-      <label for="maps_id">map_id:</label>
-      <input type="text" name="maps_id" value="${mapID}" disabled="disabled" readonly>
-      <label for="lat">Lat:</label>
-      <input type="text" name="lat" value="${lat}" readonly>
-      <label for="lng">Lng:</label>
-      <input type="text" name="lng" value="${lng}" readonly><br><br>
-      <label for="name">Title:</label>
-      <input type="text" name="name">
+    <form class="edit-form" id="myform-${id}">
+      <input type="hidden" name="maps_id" value="${mapID}">
+      <input type="hidden" name="lat" value="${lat}">
+      <input type="hidden" name="lng" value="${lng}">
+      <div>
+        <label for="name">Title:</label>
+        <input type="text" name="name">
+      </div>
       <label for="description">Description:</label>
-      <input type="text" name="description">
-      <button id="add-button" type="submit">Add map point</button>
-      </form>
-      <button id="cancel-button-${id}">Cancel</button>
+      <textarea class="description-box" type="text" name="description"></textarea>
+      <div class="button-div">
+        <button class="btn btn-success" id="add-button" type="submit">Add map point</button>
+        <button class="btn btn-danger" id="cancel-button-${id}">Cancel</button>
+      </div>
+    </form>
       `);
   return editForm;
 };
@@ -77,4 +78,3 @@ $(() => {
     });
 });
 
-// map.removeLayer(marker)

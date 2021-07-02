@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <link rel="stylesheet" href="/styles/new-map-points.css" type="text/css" />
+
     <!-- leaflet api -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -16,11 +17,15 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
+
     <!-- map -->
     <script>const mapID = <%= map.id %></script>
+
+    <!-- app js -->
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/new_map.js"></script>
 
-    <style>#mymap { height: 550px; width: 550px }</style>
+    <style>#mymap { z-index:1; height: 550px; width: 550px }</style>
 
   </head>
 
@@ -30,7 +35,7 @@
     </header>
     <h1><%= map.name %></h1>
     <div id="mymap"></div>
-    <button id="finish-button">Publish Map</button>
+    <button class="btn btn-success" id="finish-button">Publish Map</button>
 
 
   </body>
