@@ -22,10 +22,13 @@
       <%- include('partials/_header') %>
     </header>
 
-    <form class="new-map-form" method="get" action="/map/new">
-      <button class="btn btn-success" type="submit">Create New Map</button>
-    </form>
+    <% if (userID) { %>
 
+      <form class="new-map-form" method="get" action="/map/new">
+        <button class="btn btn-success" type="submit">Create New Map</button>
+      </form>
+
+    <% } %>
 
     <div class="mapContainer">
 
