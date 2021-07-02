@@ -1,0 +1,22 @@
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+
+  .button-div {
+    margin-top: 1em;
+  }
+
+  .description-box {
+    height: 3em;
+    resize: none;
+  }
+}
+
+#finish-button {
+  margin-top: 10px;
+}
+
+#mymap {
+  margin-top: 40px;
+}
