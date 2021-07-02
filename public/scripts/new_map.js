@@ -1,4 +1,4 @@
-
+// Build map as requested by user
 const createEditForm = (lat, lng, id) => {
   const editForm = (`
     <form class="edit-form" id="myform-${id}">
@@ -20,14 +20,12 @@ const createEditForm = (lat, lng, id) => {
   return editForm;
 };
 
+// AJAX fetch the newly created map
 $(() => {
   $.get(`/api/maps/${mapID}`)
     .then((data) => {
       const mapobj = data.map[0];
       const { lat, lng } = mapobj.center_coords;
-      //const $pointForm = $('#point-form');
-
-
       const mymap = L.map('mymap').setView([lat, lng], mapobj.zoom);
       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -37,19 +35,18 @@ $(() => {
         zoomOffset: -1,
         accessToken: 'pk.eyJ1Ijoic3Vkb2ZlciIsImEiOiJja3FkeWFhcmMwYWxhMnBtbHlvODhib3ZqIn0.3SgagUt_Y6_pJCpgzEopZg'
       }).addTo(mymap);
-
+      // On click create a marker and append a form to it
       const onMapClick = function(e) {
         let marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(mymap);
         const markerid = L.stamp(marker);
         const editForm = createEditForm(e.latlng.lat, e.latlng.lng, markerid);
-
+        // Append edit form to new marker
         marker.bindPopup(`${editForm}`).openPopup();
         $('body').on('click', `#cancel-button-${markerid}`, (e) => {
           e.preventDefault();
           mymap.removeLayer(marker);
         });
         $(`body`).on('submit', `#myform-${markerid}`, function(e) {
-          console.log("myform submitted");
           e.preventDefault();
           const data = $(this).serialize();
           $.post(`/map/new/${mapID}/points`, data)
@@ -63,7 +60,7 @@ $(() => {
       };
 
       mymap.on('click', onMapClick);
-
+      // Post new data
       $('#finish-button').click((e) => {
         e.preventDefault();
         const centerCoords = mymap.getCenter();

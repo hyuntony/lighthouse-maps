@@ -1,3 +1,4 @@
+// Dynamically build edit form
 const createEditForm = (lat, lng, id) => {
   const editForm = (`
     <form id="myform-${id}">
@@ -17,13 +18,14 @@ const createEditForm = (lat, lng, id) => {
       `);
   return editForm;
 };
-
+// Dynamically add markers to map
 const loadMarkers = (map, data, group) => {
   if (data[0].coords) {
     data.forEach(point => {
       const lat = Number(point.coords.lat);
       const lng = Number(point.coords.lng);
       const marker = L.marker([lat, lng]).addTo(map).addTo(group);
+      // Each marker has an edit form
       marker.bindPopup(`
         <form id="point-update">
           <input type="hidden" name="point_id" value="${point.id}">
@@ -43,14 +45,14 @@ const loadMarkers = (map, data, group) => {
 };
 
 $(() => {
-
+  // AJAX fetch for map's original points
   $.get(`/api/maps/${mapID}/points`)
     .then(data => {
       const dataObj = data.maps;
       const {lat, lng} = dataObj[0] ? dataObj[0].center_coords : {lat:0,lng:0};
       const zoom = dataObj[0].zoom;
+      // Declare a leaflet map instance with our data
       const mymap = L.map('mymap').setView([lat, lng],zoom);
-
       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
@@ -61,16 +63,15 @@ $(() => {
       }).addTo(mymap);
       const groupOne = L.layerGroup().addTo(mymap);
 
-
+      // Call to finally render markers onto map
       loadMarkers(mymap, dataObj, groupOne);
 
-      // update name and description of map_points
+      // Update name and description of map_points
       $('body').on("submit", "#point-update", function(e) {
         e.preventDefault();
         const data = $(this).serialize();
         $.post("/map/point/update", data)
-          .then(data => {
-            console.log(data);
+          .then(() => {
             setTimeout(() => {
               groupOne.clearLayers(),
               $.get(`/api/maps/${mapID}/points`)
@@ -82,13 +83,12 @@ $(() => {
           });
       });
 
-      // remove map_point
+      // Remove map_point
       $(`body`).on("submit", "#point-remove", function(e) {
         e.preventDefault();
         const data = $(this).serialize();
         $.post("/map/point/delete", data)
-          .then(data => {
-            console.log(data);
+          .then(() => {
             setTimeout(() => {
               groupOne.clearLayers(),
               $.get(`/api/maps/${mapID}/points`)
@@ -105,7 +105,7 @@ $(() => {
         let marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(mymap);
         const markerid = L.stamp(marker);
         const editForm = createEditForm(e.latlng.lat, e.latlng.lng, markerid);
-
+        // Add edit form to new popup
         marker.bindPopup(`${editForm}`).openPopup();
         $('body').on('click', `#cancel-button-${markerid}`, (e) => {
           e.preventDefault();
@@ -128,7 +128,7 @@ $(() => {
             );
         });
       };
-
+      //On click, run the add marker function
       mymap.on('click', onMapClick);
 
       // update map title
@@ -138,8 +138,8 @@ $(() => {
         $.post(`/map/title`, data)
           .then(
             alert("Title Updated!")
-          )
-      })
+          );
+      });
 
       // update map description
       $(`body`).on('submit', '#description-update', function(e) {
@@ -163,6 +163,5 @@ $(() => {
             window.location.href = data;
           });
       });
-
     });
 });

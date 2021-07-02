@@ -48,7 +48,6 @@ app.use(express.static("public"));
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
-const widgetsRoutes = require("./routes/widgets");
 const loginRoutes = require("./routes/login");
 const registerRoutes = require("./routes/register");
 const apiMapsRoutes = require("./routes/api_maps");
@@ -60,7 +59,6 @@ const apiFavorites = require("./routes/api_favorites");
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
-app.use("/api/widgets", widgetsRoutes(db));
 app.use("/login", loginRoutes(db));
 app.use("/register", registerRoutes(db));
 app.use("/api/maps", apiMapsRoutes(db));
@@ -75,18 +73,7 @@ app.use('/api/favorites', apiFavorites(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
-  const userID = req.session.user_id;
-  db.query(`SELECT * FROM users
-            WHERE id = $1`, [userID])
-    .then(data => {
-      let user = '';
-      if (data.rows.length > 0) {
-        user = data.rows[0].name;
-
-      }
-      const templateVars = { user, userID };
-      return res.render("index", templateVars);
-    });
+  return res.redirect('/maps')
 });
 
 app.listen(PORT, () => {

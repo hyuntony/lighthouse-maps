@@ -3,12 +3,13 @@
   position:fixed !important;
   top: 0 !important;
   width: 100% !important;
-  background-image: url("https://www.transparenttextures.com/patterns/beige-paper.png");
+  background-color: #E0E0E0;
+  display: flex;
+  justify-content: space-between;
 }
 
 #logo {
   height: 50px;
-
 }
 
 body {
@@ -18,4 +19,14 @@ body {
   h1 {
     color: #244751;
   }
+}
+
+.left-container{
+  display: flex;
+  align-items: flex-end;
+}
+
+.right-container{
+  display: flex;
+  align-items: flex-end;
 }

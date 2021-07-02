@@ -3,11 +3,10 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
-
+// Dynamically resize
 $(() => {
-
   $(".totalMapBox").height($(".totalMapBox").width());
-
-
-
+  window.addEventListener('resize', () => {
+    $(".totalMapBox").height($(".totalMapBox").width());
+  });
 });
