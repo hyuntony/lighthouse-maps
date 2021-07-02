@@ -1,19 +1,20 @@
 const createEditForm = (lat, lng, id) => {
   const editForm = (`
-    <form id="myform-${id}">
-      <label for="maps_id">map_id:</label>
-      <input type="text" name="maps_id" value="${mapID}" disabled="disabled" readonly>
-      <label for="lat">Lat:</label>
-      <input type="text" name="lat" value="${lat}" readonly>
-      <label for="lng">Lng:</label>
-      <input type="text" name="lng" value="${lng}" readonly><br><br>
-      <label for="name">Title:</label>
-      <input type="text" name="name">
+    <form class="edit-form" id="myform-${id}">
+      <input type="hidden" name="maps_id" value="${mapID}">
+      <input type="hidden" name="lat" value="${lat}">
+      <input type="hidden" name="lng" value="${lng}">
+      <div>
+        <label for="name">Title:</label>
+        <input type="text" name="name">
+      </div>
       <label for="description">Description:</label>
-      <input type="text" name="description">
-      <button id="add-button" type="submit">Add map point</button>
-      </form>
-      <button id="cancel-button-${id}">Cancel</button>
+      <textarea class="description-box" type="text" name="description"></textarea>
+      <div class="button-div">
+        <button class="btn-sm btn-success" id="add-button" type="submit">Add map point</button>
+        <button class="btn-sm btn-danger" id="cancel-button-${id}">Cancel</button>
+      </div>
+    </form>
       `);
   return editForm;
 };
@@ -25,18 +26,20 @@ const loadMarkers = (map, data, group) => {
       const lng = Number(point.coords.lng);
       const marker = L.marker([lat, lng]).addTo(map).addTo(group);
       marker.bindPopup(`
-        <form id="point-update">
-          <input type="hidden" name="point_id" value="${point.id}">
-          <label for="name">Title:</label>
-          <input type="text" name="name" value="${point.name}"><br>
-          <label for="description">Description:</label>
-          <input type="text" name="description" value="${point.description}">
-          <button type="submit">Update</button>
-        </form>
-        <form id="point-remove">
-          <input type="hidden" name="point_id" value="${point.id}">
-          <button type="submit">Remove</button>
-        </form>
+        <div class="loaded-markers">
+          <form id="point-update">
+            <input type="hidden" name="point_id" value="${point.id}">
+            <label for="name">Title:</label>
+            <input type="text" name="name" value="${point.name}"><br>
+            <label for="description">Description:</label>
+            <textarea class="text-area" type="text" name="description">${point.description}</textarea>
+            <button class="update-button btn-sm btn-success" type="submit">Update</button>
+          </form>
+          <form id="point-remove">
+            <input type="hidden" name="point_id" value="${point.id}">
+            <button class="remove-button btn-sm btn-danger" type="submit">Remove</button>
+          </form>
+        </div>
       `);
     });
   }
@@ -131,34 +134,18 @@ $(() => {
 
       mymap.on('click', onMapClick);
 
-      // update map title
-      $(`body`).on('submit', '#title-update', function(e) {
-        e.preventDefault();
-        const data = $(this).serialize();
-        $.post(`/map/title`, data)
-          .then(
-            alert("Title Updated!")
-          )
-      })
-
-      // update map description
-      $(`body`).on('submit', '#description-update', function(e) {
-        e.preventDefault();
-        const data = $(this).serialize();
-        $.post(`/map/description`, data)
-          .then(
-            alert("Description Updated!")
-          );
-      });
-
       //finish Edit sends the current center-coords and zoom levels
-      $('#edit-final').click((e) => {
+      $('body').on('submit', '#edit-final', function(e) {
         e.preventDefault();
+
         const centerCoords = mymap.getCenter();
         const zoom = mymap.getZoom();
         const { lat, lng } = centerCoords;
-        const data = { mapID, lat, lng, zoom};
-        $.post(`/map/new/${mapID}/update`, data)
+        const mapData = { lat, lng, zoom};
+        const url = new URLSearchParams(mapData).toString();
+        const data = $(this).serialize() + '&' + url;
+
+        $.post(`/map/edit/update`, data)
           .then(data => {
             window.location.href = data;
           });

@@ -111,7 +111,7 @@ module.exports = (db) => {
       );
   });
 
-
+  // update map coordinates and zoom
   router.post("/new/:map_id/update", (req, res) => {
     const map = req.body;
     const lat = Number(map.lat);
@@ -125,23 +125,24 @@ module.exports = (db) => {
       });
   });
 
-  // update map name
-  router.post("/title", (req, res) => {
-    const reqdata = req.body;
+  // update map name, description, coordinates and zoom
+  router.post("/edit/update", (req, res) => {
+    console.log(req.body);
+    const map = req.body;
+    const lat = Number(map.lat);
+    const lng = Number(map.lng);
+    const zoom = Number(map.zoom);
     db.query(`UPDATE maps
-              SET name = $1
-              WHERE id = ${reqdata.map_id}`, [reqdata.name])
-      .then(res.json({ success: true }));
+    SET center_coords = '{"lat": "${lat}", "lng": "${lng}"}',
+    zoom = ${zoom},
+    name = $1,
+    description = $2
+    WHERE id = ${map.map_id}`, [map.name, map.description])
+      .then(data => {
+        return res.send(`/map/${map.map_id}`);
+      });
   });
 
-  // update map description
-  router.post("/description", (req, res) => {
-    const reqdata = req.body;
-    db.query(`UPDATE maps
-              SET description = $1
-              WHERE id = ${reqdata.map_id}`, [reqdata.description])
-      .then(res.json({ success: true }));
-  });
 
   // update point name and description
   router.post("/point/update", (req, res) => {
