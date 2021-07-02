@@ -38,17 +38,14 @@
     </header>
     <div class="update-container">
       <div class="edit-details">
-        <form id="title-update">
+        <form id="edit-final">
           <input type="hidden" name="map_id" value="<%= map.id %>">
+          <label for="name">Map Title:</label>
           <input type="text" name="name" value="<%=map.name%>">
-          <button id="updateTitle" type="submit">Update Title</button>
+          <label for="description">Description:</label>
+          <textarea class="map-description" type="text" name="description"><%=map.description%></textarea>
+          <button class="btn btn-success" type="submit">Finish Edit</button>
         </form>
-        <form id="description-update">
-          <input type="hidden" name="map_id" value="<%= map.id %>">
-          <input type="text" name="description" value="<%=map.description%>">
-          <button type="submit">Update Description</button>
-        </form>
-        <button id="edit-final">Finish Edit</button>
       </div>
       <div id="mymap"></div>
     </div>

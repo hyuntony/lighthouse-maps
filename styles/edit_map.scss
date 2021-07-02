@@ -6,9 +6,58 @@
   z-index: 1;
 }
 
-#updateTitle {
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
 
+  .button-div {
+    margin-top: 1em;
+  }
 
+  .description-box {
+    height: 3em;
+    resize: none;
+  }
+}
+
+#edit-final {
+  display: flex;
+  flex-direction: column;
+
+  button {
+    margin-top: 10px;
+  }
+}
+
+.loaded-markers {
+  display: flex;
+  flex-direction: column;
+
+  .update-button {
+    margin-top: 10px;
+    background-color: #198754;
+    color: white;
+
+  }
+
+  .remove-button {
+    position: absolute;
+    background-color: #dc3645;
+    color: white;
+    right: 22px;
+    bottom: 14px;
+  }
+
+  .text-area {
+    resize: none;
+  }
+}
+
+#point-update {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .edit-details{
@@ -16,9 +65,7 @@
   display: flex;
   flex-direction: column;
   width: 550px;
-  #title-update{
 
-  }
 }
 
 .update-container{
