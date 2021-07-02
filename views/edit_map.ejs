@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
 
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/edit_map.css" type="text/css" />
     <!-- leaflet api -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -30,34 +31,26 @@
 
   </head>
 
+
   <body>
     <header>
       <%- include('partials/_header') %>
     </header>
-
-    <form id="title-update">
-      <input type="hidden" name="map_id" value="<%= map.id %>">
-      <input type="text" name="name" value="<%=map.name%>">
-      <button type="submit">Update Title</button>
-    </form>
-
-
-
-
-
-    <div id="mymap"></div>
-
-    <form id="description-update">
-      <input type="hidden" name="map_id" value="<%= map.id %>">
-      <input type="text" name="description" value="<%=map.description%>">
-      <button type="submit">Update Description</button>
-    </form>
-    <button id="edit-final">Finish Edit</button>
-
-
-
-
-
-
+    <div class="update-container">
+      <div class="edit-details">
+        <form id="title-update">
+          <input type="hidden" name="map_id" value="<%= map.id %>">
+          <input type="text" name="name" value="<%=map.name%>">
+          <button id="updateTitle" type="submit">Update Title</button>
+        </form>
+        <form id="description-update">
+          <input type="hidden" name="map_id" value="<%= map.id %>">
+          <input type="text" name="description" value="<%=map.description%>">
+          <button type="submit">Update Description</button>
+        </form>
+        <button id="edit-final">Finish Edit</button>
+      </div>
+      <div id="mymap"></div>
+    </div>
   </body>
 </html>
