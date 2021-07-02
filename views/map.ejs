@@ -56,17 +56,16 @@
 
     <div id="mapAndDesc">
         <div id="mymap"></div>
+      <div id="mapInfo">
+        <h3> <%= map.description %> </h3>
+        <h4>  <%= date %>  </h4>
       </div>
-    <div id="mapInfo">
-      <h3> <%= map.description %> </h3>
-      <h4>  <%= date %>  </h4>
     </div>
       <script>const mapID = <%= map.id %></script>
       <script>const userID= "<%= userID %>"</script>
 
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
 
 
 
