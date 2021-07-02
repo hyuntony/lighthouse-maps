@@ -45,7 +45,7 @@ module.exports = (db) => {
         }
       });
   });
-  // remove session cookie on logout
+  // Remove session cookie on logout
   router.post("/logout", (req, res) => {
     req.session['user_id'] = null;
     return res.redirect('/');

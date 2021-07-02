@@ -2,6 +2,7 @@ const express = require('express');
 const router  = express.Router();
 const timeago = require('timeago.js');
 
+// Get users data, forward to new map template
 module.exports = (db) => {
   router.get("/new", (req, res) => {
     const userID = req.session.user_id;
@@ -17,6 +18,7 @@ module.exports = (db) => {
       });
   });
 
+  // Get user data, new map data, forward to map points template
   router.get("/new/:map_id", (req, res) => {
     const userID = req.session.user_id;
     const mapID = req.params.map_id;
@@ -36,6 +38,7 @@ module.exports = (db) => {
       });
   });
 
+  // Get user and map data, forward to edit map template
   router.get("/:map_id/edit", (req, res) => {
     const userID = req.session.user_id;
     const mapID = req.params.map_id;
@@ -55,6 +58,7 @@ module.exports = (db) => {
       });
   });
 
+  // Get user and map data, forward to map's final page
   router.get("/:map", (req, res) => {
     const userID = req.session.user_id;
     const mapID = req.params.map;
@@ -75,6 +79,7 @@ module.exports = (db) => {
       });
   });
 
+  // Sets map's starting coordinates based on user input, forwards to map creation
   router.post("/new", (req, res) => {
     const userID = req.session.user_id;
     const { title, description, city } = req.body;
@@ -95,7 +100,7 @@ module.exports = (db) => {
       });
   });
 
-  //INSERT new map points into map_points table
+  // Post new points to db
   router.post("/new/:map_id/points", (req, res) => {
     const mapID = req.params.map_id;
     const point = req.body;
@@ -110,7 +115,7 @@ module.exports = (db) => {
       );
   });
 
-  // update map coordinates and zoom
+  // Update map coordinates and zoom
   router.post("/new/:map_id/update", (req, res) => {
     const map = req.body;
     const lat = Number(map.lat);
@@ -124,7 +129,7 @@ module.exports = (db) => {
       });
   });
 
-  // update map name, description, coordinates and zoom
+  // Update map name, description, coordinates and zoom
   router.post("/edit/update", (req, res) => {
     console.log(req.body);
     const map = req.body;
@@ -137,23 +142,22 @@ module.exports = (db) => {
     name = $1,
     description = $2
     WHERE id = ${map.map_id}`, [map.name, map.description])
-      .then(data => {
+      .then(() => {
         return res.send(`/map/${map.map_id}`);
       });
   });
 
-
-  // update point name and description
+  // Update point name and description
   router.post("/point/update", (req, res) => {
-    const reqdata = req.body;
+    const reqData = req.body;
 
     db.query(`UPDATE map_points
               SET name = $1, description = $2
-              WHERE id = ${reqdata.point_id}`, [reqdata.name, reqdata.description])
+              WHERE id = ${reqData.point_id}`, [reqData.name, reqData.description])
       .then(res.json({ success: true }));
   });
 
-  // delete point
+  // Delete point
   router.post("/point/delete", (req, res) => {
     const reqdata = req.body;
 
@@ -162,6 +166,7 @@ module.exports = (db) => {
       .then(res.json({ success: true }));
   });
 
+  // Gets user and map's data to redirect to map's edit page
   router.get("/:map_id/edit", (req, res) => {
     const userID = req.session.user_id;
     const mapID = req.params.map_id;
@@ -181,6 +186,7 @@ module.exports = (db) => {
       });
   });
 
+  // Delete map, dedirect back to user's profile
   router.post('/:map_id/delete', (req, res) => {
     const mapID = req.params.map_id;
     db.query(`DELETE FROM maps where maps.id = $1`, [mapID])
@@ -188,9 +194,6 @@ module.exports = (db) => {
         res.redirect('/profile');
       });
   });
-
-
-
 
   return router;
 };

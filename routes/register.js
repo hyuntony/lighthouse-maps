@@ -1,16 +1,8 @@
-/*
- * All routes for Users are defined here
- * Since this file is loaded in server.js into api/users,
- *   these routes are mounted onto /users
- * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
- */
-
 const express = require('express');
 const { generateRandomString } = require('../helpers/helperfunc');
 const router  = express.Router();
 const bcrypt = require('bcrypt');
 const cookieSession = require('cookie-session');
-
 
 // cookie-session settings
 router.use(cookieSession({
@@ -21,7 +13,7 @@ router.use(cookieSession({
 
 // Bcrypt variables
 const saltRounds = 10;
-
+//check if user already exists. Otherwise render register form.
 module.exports = (db) => {
   router.get("/", (req, res) => {
     const userID = req.session.user_id;
@@ -40,6 +32,7 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+  // Validate user input, assign an ID, forward accordingly
   router.post("/", (req, res) => {
     const newUser = req.body;
     const randomId = generateRandomString();
