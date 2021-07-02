@@ -1,13 +1,6 @@
-/*
- * All routes for Widgets are defined here
- * Since this file is loaded in server.js into api/widgets,
- *   these routes are mounted onto /widgets
- * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
- */
-
 const express = require('express');
 const router  = express.Router();
-
+// Favorites API
 module.exports = (db) => {
   router.get("/", (req, res) => {
     let query = `SELECT * FROM favorites`;
@@ -22,7 +15,7 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-
+  // User's Favorited Maps
   router.get("/:userID/:mapID", (req,res)=> {
     db.query(`SELECT * FROM favorites
               WHERE users_id = $1 AND maps_id = $2`,[req.params.userID,req.params.mapID])
@@ -31,7 +24,7 @@ module.exports = (db) => {
       });
 
   });
-
+  // User unfavorites a map, delete row
   router.post("/delete", (req,res)=> {
     const {mapID} = req.body;
     const user = req.session.user_id;
@@ -40,7 +33,7 @@ module.exports = (db) => {
       .then(res.json({ sucess : true }))
       .catch(e => console.log(e));
   });
-
+  // User favorites a map, add row
   router.post("/", (req,res)=> {
     const {mapID} = req.body;
     const user = req.session.user_id;
@@ -48,8 +41,5 @@ module.exports = (db) => {
       .then(res.json({ sucess : true }))
       .catch(console.log);
   });
-
-
-
   return router;
 };

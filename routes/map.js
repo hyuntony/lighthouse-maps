@@ -17,7 +17,6 @@ module.exports = (db) => {
       });
   });
 
-
   router.get("/new/:map_id", (req, res) => {
     const userID = req.session.user_id;
     const mapID = req.params.map_id;
@@ -56,10 +55,10 @@ module.exports = (db) => {
       });
   });
 
-    router.get("/:map", (req, res) => {
-      const userID = req.session.user_id;
-      const mapID = req.params.map;
-      db.query(`SELECT * FROM users
+  router.get("/:map", (req, res) => {
+    const userID = req.session.user_id;
+    const mapID = req.params.map;
+    db.query(`SELECT * FROM users
       WHERE id = $1`, [userID])
       .then(data => {
         let user = '';
@@ -67,14 +66,14 @@ module.exports = (db) => {
           user = data.rows[0].name;
         }
         db.query(`SELECT * FROM maps WHERE id = $1 `, [mapID])
-        .then((data => {
-          const map = data.rows[0];
-          const date = timeago.format(map.date_created);
-          const templateVars = { user, map, userID, mapID, date };
-          return res.render("map", templateVars);
-        }));
+          .then((data => {
+            const map = data.rows[0];
+            const date = timeago.format(map.date_created);
+            const templateVars = { user, map, userID, mapID, date };
+            return res.render("map", templateVars);
+          }));
       });
-    });
+  });
 
   router.post("/new", (req, res) => {
     const userID = req.session.user_id;
@@ -120,7 +119,7 @@ module.exports = (db) => {
     db.query(`UPDATE maps
     SET center_coords = '{"lat": "${lat}", "lng": "${lng}"}', zoom = ${zoom}
     WHERE ID = ${map.mapID}`)
-      .then(data => {
+      .then(() => {
         return res.send(`/map/${map.mapID}`);
       });
   });
@@ -183,7 +182,6 @@ module.exports = (db) => {
 
   router.post('/:map_id/delete', (req, res) => {
     const mapID = req.params.map_id;
-    console.log(` in delete route `);
     db.query(`DELETE FROM maps where maps.id = $1`, [mapID])
       .then(() => {
         res.redirect('/profile');

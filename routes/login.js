@@ -1,22 +1,15 @@
-/*
- * All routes for Users are defined here
- * Since this file is loaded in server.js into api/users,
- *   these routes are mounted onto /users
- * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
- */
-
 const express = require('express');
 const router  = express.Router();
 const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
 
-// cookie-session settings
+// Cookie-session settings
 router.use(cookieSession({
   name: 'session',
   keys: [ 'key1', 'key2' ],
   maxAge: 24 * 60 * 60 * 1000
 }));
-
+// Check if session cookie exists, redirect accordingly
 module.exports = (db) => {
   router.get("/", (req, res) => {
     const userID = req.session.user_id;
@@ -35,7 +28,7 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-
+  // Check passwords, redirect accordingly
   router.post("/", (req, res) => {
     const loginAttempt = req.body;
     db.query(`SELECT * FROM users
@@ -52,7 +45,7 @@ module.exports = (db) => {
         }
       });
   });
-
+  // remove session cookie on logout
   router.post("/logout", (req, res) => {
     req.session['user_id'] = null;
     return res.redirect('/');

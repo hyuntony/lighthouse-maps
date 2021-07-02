@@ -30,7 +30,6 @@ module.exports = (db) => {
             db.query(`SELECT maps.name, maps_id, maps.description, maps.city, maps.thumbnail_url, maps.description, maps.date_created
             FROM favorites JOIN users on users.id = users_id JOIN maps on maps.id = maps_id WHERE users.id = $1`, [userID])
             .then(data => {
-              console.log(`great success`, data.rows);
               const favorites = data.rows;
               favorites.forEach((map) => {
                 map.date_created = timeago.format(map.date_created);

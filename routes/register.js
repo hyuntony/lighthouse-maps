@@ -56,7 +56,7 @@ module.exports = (db) => {
                   VALUES ('${randomId}', $1, $2, $3)`, [newUser.name, newUser.email, bcrypt.hashSync(newUser.password, saltRounds)])
           .then(
             req.session['user_id'] = randomId,
-            res.redirect('/')
+            res.redirect('/maps')
           );
 
       });
