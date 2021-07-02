@@ -6,6 +6,9 @@ const timeago = require('timeago.js');
 module.exports = (db) => {
   router.get("/new", (req, res) => {
     const userID = req.session.user_id;
+    if (!userID) {
+      return res.redirect('/');
+    }
     db.query(`SELECT * FROM users
             WHERE id = $1`, [userID])
       .then(data => {
@@ -22,6 +25,9 @@ module.exports = (db) => {
   router.get("/new/:map_id", (req, res) => {
     const userID = req.session.user_id;
     const mapID = req.params.map_id;
+    if (!userID) {
+      return res.redirect('/');
+    }
     db.query(`SELECT * FROM users
     WHERE id = $1`, [userID])
       .then(data => {
@@ -42,6 +48,9 @@ module.exports = (db) => {
   router.get("/:map_id/edit", (req, res) => {
     const userID = req.session.user_id;
     const mapID = req.params.map_id;
+    if (!userID) {
+      return res.redirect('/');
+    }
     db.query(`SELECT * FROM users
               WHERE id = $1`, [userID])
       .then(data => {
